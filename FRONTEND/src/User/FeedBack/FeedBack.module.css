@@ -1,0 +1,22 @@
+.body{
+    background-color: #d6dbeb;
+    height: 100vh;
+    width: 100%;
+    background-image: url('./feedback.gif');
+    background-position:right;
+    background-position-x: 87%;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+}
+.Card{
+background-color: white;
+height: 400px;
+width: 400px;
+border-radius: 40px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around;
+margin-left: 400px;
+}

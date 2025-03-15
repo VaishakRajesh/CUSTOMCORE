@@ -1,0 +1,81 @@
+body{
+    margin: 0;
+}
+.Body{
+     background-color: black;
+ height: 390vh;
+ border-bottom: 0.1px solid #ffffff;
+}
+.Head{
+    display: flex;
+    justify-content: space-between;
+    height: 90px;
+    width: 100%;
+    border-bottom: 0.1px solid #ffffff;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: rgba(90, 90, 90, 0.25) 0px 30px 60px -12px inset, rgba(26, 26, 26, 0.3) 0px 18px 36px -18px inset;
+}
+.Main{
+   background-image: url("./img/gif.gif");
+   background-size: cover;
+   height: 100vh;
+   padding:0;
+   margin:0;
+   border-bottom: 0.1px solid #ffffff;
+}
+   
+.Logo{
+    color: white;
+    font-size: 30px;
+    margin: 30px;
+}
+.Select{
+    margin: 40px;
+}
+.h1{
+    color: #ffffff;
+    font-size: 70px;
+    font-family: 'Serif Fonts';
+}
+.Mainbody{
+    height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+}
+.items1{
+display: flex;
+}
+.items2{
+display: flex;
+margin-top: 30px;
+}
+.itemshead1
+{
+    color: #ffffff;
+    margin: 200px;
+    margin-top: 170px;
+    font-size: 60px;
+}
+.itemshead2
+{
+    color: #ffffff;
+    font-size: 60px;
+    margin: 200px;
+}
+.img1{
+margin: 230px;
+}
+.img2{
+margin-left: 150px;
+margin-top: 100px;
+height: 200px;
+}
+.p{
+    font-size: 20px;
+    color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

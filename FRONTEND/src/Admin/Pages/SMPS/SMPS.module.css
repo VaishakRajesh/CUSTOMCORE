@@ -1,0 +1,45 @@
+.Body {
+    display: flex;
+    width: 100%;
+}
+
+.container {
+    flex: 6;
+}
+
+.SMPS{
+    height: 600px;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 400px;
+    margin-top: 50px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.Text{
+    margin: 50px;
+    font-size: 50px;
+}
+.Button button {
+    background-color: black; /* Black background */
+    color: white; /* White text */
+    border: 2px solid white; /* White border */
+    border-radius: 8px; /* Slightly rounded corners */
+    padding: 10px 20px; /* Add spacing inside the button */
+    font-size: 16px; /* Adjust the font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    margin-top: 50px;
+  }
+  
+  .Button button:hover {
+    background-color: white; /* Invert background color on hover */
+    color: black; /* Invert text color on hover */
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.3); /* Add a glowing effect */
+    transform: scale(1.05); /* Slightly enlarge the button */
+    border: 1px solid black;
+  }
+  .MotherBoard{
+    margin-top: 50px;
+  }

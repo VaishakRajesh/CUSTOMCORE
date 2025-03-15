@@ -1,0 +1,22 @@
+.body {
+    background-color: #482b74;
+    background-image: url('./img/user.gif');
+    background-size: 1300px;
+    background-position: right;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.Card {
+    border: 3px solid #2e2f42;
+    width: 450px;
+    margin-left: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+        border-radius: 20px;
+}

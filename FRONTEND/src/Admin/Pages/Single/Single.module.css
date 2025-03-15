@@ -1,0 +1,76 @@
+.single{
+display: flex;
+width: 100%;
+}
+.Container{
+    flex: 6;
+}
+.top{
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+.left{
+    flex: 1;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 20px;
+    position: relative;
+
+}
+.right{
+    flex: 2;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 20px;
+}
+.item{
+display: flex;
+gap: 20px;
+
+}
+.itemimg{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.editbutton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+    color: blueviolet;
+    background-color: rgba(137, 43, 226, 0.319);
+    cursor: pointer;
+    border-radius: 0px 0px 0px 5px;
+}
+.itemtitle{
+    margin-bottom: 10px;
+    color: gray;
+}
+.detailitem{
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.itemkey{
+    font-weight: bold;
+    color: gray;
+    margin-right: 10px;
+}
+.itemvalue{
+   font-weight: 300;
+
+}
+.title{
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.bottom{
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 20px;
+    margin: 10px 20px;
+}

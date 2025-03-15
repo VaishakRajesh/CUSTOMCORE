@@ -1,0 +1,56 @@
+.body{
+    background-color: #11111e;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card {
+    height: 800px;
+    width: 500px;
+    border: 5px solid;
+    border-radius: 45px;
+    box-shadow: rgba(165, 165, 165, 0.56) 0px 22px 70px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1a1a2e;
+    animation: borderColorChange 5s infinite;
+}
+
+@keyframes borderColorChange {
+    0% {
+        border-color: #FF5733;
+    }
+    25% {
+        border-color: #33FF57;
+    }
+    50% {
+        border-color: #3357FF;
+    }
+    75% {
+        border-color: #FF33A1;
+    }
+    100% {
+        border-color: #FF5733;
+    }
+}
+
+.Profileimg {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    border: 1px solid whitesmoke;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+.text{
+    color: white;
+    display: flex;
+    margin: 10px;
+    font-size: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

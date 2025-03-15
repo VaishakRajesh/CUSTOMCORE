@@ -1,0 +1,53 @@
+.Body {
+    display: flex;
+    width: 100%;
+}
+
+.Container {
+    flex: 6;
+}
+.Buttons {
+    display: flex; /* Arrange buttons in a row */
+    gap: 20px; /* Space between each button */
+    justify-content: center; /* Center align the buttons */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    height: 100px;
+    width: 98%;
+    border-radius: 50px;
+    margin: 30px;
+  }
+  
+  .Button button {
+    background-color: black; /* Black background */
+    color: white; /* White text */
+    border: 2px solid white; /* White border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 12px 24px; /* Add padding to buttons */
+    font-size: 16px; /* Make text readable */
+    font-weight: bold; /* Emphasize text */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: all 0.3s ease; /* Smooth hover transition */
+  }
+  
+  .Button button:hover {
+    background-color: white; /* Invert colors on hover */
+    color: black; /* Invert text color */
+    border: 2px solid black; /* Change border to black */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Update shadow */
+    transform: scale(1.1); /* Slightly enlarge the button */
+  }
+  .Dispaly{
+
+  }
+  .changebutton{
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    margin-left: 92%;
+    border-radius: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

@@ -8,26 +8,23 @@ import Charts from '../../Components/Charts/Charts'
 import Table from '../../Components/Table/Table'
 const Home = () => {
   return (
-    <div className={Styles.Body}>
-      <Sidebar/>
-      <div className={Styles.Container}>
-        <Navbar/>
-        <div className={Styles.Widgets}>
-          <Widgets type="user"/>
-          <Widgets type="order"/>
-          <Widgets type="earning"/>
-          <Widgets type="balance"/>
-        </div>
-        <div className={Styles.charts}>
-        <Featured/>
-        <Charts/>
-        </div>
-        <div className={Styles.listcontainer}>
-          <div className={Styles.listtitle}>Latest Transactions</div>
-          <Table/>
-        </div>
+    <>
+      <div className={Styles.Widgets}>
+        <Widgets type="user" />
+        <Widgets type="order" />
+        <Widgets type="earning" />
+        <Widgets type="balance" />
       </div>
-        </div>
+      <div className={Styles.charts}>
+        <Featured />
+        <Charts />
+      </div>
+      <div className={Styles.listcontainer}>
+        <div className={Styles.listtitle}>Latest Transactions</div>
+        <Table />
+      </div>
+    </>
+
   )
 }
 export default Home

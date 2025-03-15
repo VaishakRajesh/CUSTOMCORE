@@ -30,9 +30,9 @@ const Select = () => {
 
     return (
         <div className={Style.Body}>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className={Style.Container}>
-                <Navbar />
+                {/* <Navbar /> */}
                 <div className={Style.Select}>
                     <div className={Style.Buttons}>
                         <div className={Style.Button}>

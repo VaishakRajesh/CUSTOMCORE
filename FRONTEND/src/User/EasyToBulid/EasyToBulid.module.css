@@ -1,0 +1,87 @@
+.body {
+  padding: 20px;
+  background-color: #0d0d0d; /* Deep black background */
+  min-height: 100vh; /* Ensures full height for centering */
+  display: flex;
+  flex-direction: column; /* Changed to column to stack grid and next button */
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 100px auto 0 auto; /* 100px top margin, auto sides */
+}
+
+.nextButtonContainer {
+  margin-top: 40px; /* Space between grid and Next button */
+  margin-left: 450px; /* Shift to the right */
+}
+
+.customButton {
+  width: 200px;
+  height: 80px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 40px; /* Pill shape */
+  color: #e0e0e0; /* Light gray text for contrast */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border: 1px solid #2a2a2a;
+  transition: all 0.3s ease;
+}
+
+.customButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+.nextButton {
+  width: 120px; /* Smaller width */
+  height: 50px; /* Smaller height */
+  font-size: 1rem; /* Slightly smaller text */
+  font-weight: 600;
+  text-transform: none;
+  border-radius: 25px; /* Half of height for pill shape */
+  color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border: 1px solid #2a2a2a;
+  transition: all 0.3s ease;
+}
+
+.nextButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+.selected {
+  background-color: #000000 !important;
+  border: 2px solid #00e676; /* Neon green border */
+  color: #00e676; /* Neon green text */
+  border-radius: 40px; /* Matching pill shape for selected state */
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.5),
+              0 8px 16px rgba(0, 0, 0, 0.7);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5),
+                0 8px 16px rgba(0, 0, 0, 0.7);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(192, 192, 192, 0.7),
+                0 8px 16px rgba(0, 0, 0, 0.7);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(153, 153, 153, 0.5),
+                0 8px 16px rgba(0, 0, 0, 0.7);
+  }
+}

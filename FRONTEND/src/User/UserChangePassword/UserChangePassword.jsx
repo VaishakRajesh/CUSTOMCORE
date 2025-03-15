@@ -14,7 +14,8 @@ const UserChangePassword = () => {
         event.preventDefault();
     };
     return (
-        <div><UserNavbar />
+        <div> 
+            {/* <UserNavbar /> */}
             <div className={Style.body}>
                 <div className={Style.Card}>
                     <div className={Style.Oldpassword}>

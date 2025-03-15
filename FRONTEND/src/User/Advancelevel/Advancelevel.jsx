@@ -120,7 +120,7 @@ const Advancelevel = () => {
     }, [])
     return (
         <div>
-            <UserNavbar />
+            {/* <UserNavbar /> */}
             <div className={Style.body}>
                 <div className={Style.progessbar}>
                     <Box sx={{ width: "100%", mt: 3 }}> {/* Stepper moved up */}

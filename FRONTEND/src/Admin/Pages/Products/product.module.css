@@ -49,7 +49,7 @@ label{
 .icon{
     cursor: pointer;
 }
-button{
+/* button{
     width: 150px;
     padding: 10px;
     bottom: none;
@@ -58,4 +58,4 @@ button{
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
-}
+} */

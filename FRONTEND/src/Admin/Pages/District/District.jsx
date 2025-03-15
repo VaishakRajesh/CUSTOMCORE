@@ -123,9 +123,9 @@ const District = () => {
     
     return (
         <div className={Style.Body}>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className={Style.container}>
-                <Navbar />
+                {/* <Navbar /> */}
                 <div className={Style.Selectbutton} onClick={() => setActiveSection(ActiveSection === 'insert' ? '' : 'insert')}>
                     <FileUploadOutlinedIcon />
                 </div>

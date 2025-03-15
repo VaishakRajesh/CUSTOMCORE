@@ -50,6 +50,9 @@ import BuliderChangePassword from "./Pc Buliders/BuliderChangePassword/BuliderCh
 import BuliderEditProfile from "./Pc Buliders/BuliderEditProfile/BuliderEditProfile";
 import BuliderProfile from "./Pc Buliders/BuliderProfile/BuliderProfile";
 import BuliderComplaint from "./Pc Buliders/BuliderComplaint/BuliderComplaint";
+import App from "./Admin/App";
+import Default from "./User/UserHomepage/Default";
+import EasyToBulid from "./User/EasyToBulid/EasyToBulid";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -73,7 +76,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/Admin',
-        element: <Home />,
+        element: <App />,
         children: [
             {
                 index: true,
@@ -210,36 +213,40 @@ export const router = createBrowserRouter([
         element: <UserHomePage />,
         children: [
             {
-                path: "/User/UserHomePage",
-                element: <UserHomePage />
-            },
-            {
-                path: "/User/UserProfile",
-                element: <UserProfile />
-            },
-            {
-                path: "/User/UserEditProfile",
-                element: <UserEditProfile />
-            },
-            {
-                path: "/User/UserChangePassword",
-                element: <UserChangePassword />
-            },
-            {
-                path: "/User/UserComplaint",
-                element: <UserComplaint />
-            },
-            {
-                path: "/User/UserNavbar",
+                path: "",
                 element: <UserNavbar />
             },
             {
-                path: "/User/Advancelevel",
+                path: "UserProfile",
+                element: <UserProfile />
+            },
+            {
+                path: "UserEditProfile",
+                element: <UserEditProfile />
+            },
+            {
+                path: "UserChangePassword",
+                element: <UserChangePassword />
+            },
+            {
+                path: "UserComplaint",
+                element: <UserComplaint />
+            },
+            {
+                path: "UserNavbar",
+                element: <UserNavbar />
+            },
+            {
+                path: "Advancelevel",
                 element: <Advancelevel />
             },
             {
-                path: "/User/FeedBack",
+                path: "FeedBack",
                 element: <FeedBack />
+            },
+            {
+                path: "EasyToBulid",
+                element: <EasyToBulid />
             },
         ]
     },

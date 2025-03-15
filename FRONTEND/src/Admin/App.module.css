@@ -1,0 +1,8 @@
+.Body {
+    display: flex;
+}
+
+.Container {
+    flex: 6;
+    background-color: white;
+}

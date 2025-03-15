@@ -10,7 +10,8 @@ import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 const UserEditProfile = () => {
   return (
-    <div><UserNavbar />
+    <div>
+      {/* <UserNavbar /> */}
       <div className={Style.body}>
         <div className={Style.card}>
           <div className={Style.Profileimg}>

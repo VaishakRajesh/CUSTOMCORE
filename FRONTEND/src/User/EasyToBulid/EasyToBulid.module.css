@@ -85,3 +85,20 @@
                 0 8px 16px rgba(0, 0, 0, 0.7);
   }
 }
+h3 {
+  font-size: 40px; /* Slightly larger text */
+  font-weight: 600;  /* Bold for emphasis */
+  color: #ffffff;    /* White text for dark backgrounds */
+  text-align: center; /* Center alignment */
+  margin-bottom: 1rem; /* Space below heading */
+  padding: 10px; /* Padding for spacing */
+  background: linear-gradient(90deg, #333333, #1a1a1a); /* Subtle gradient */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow effect */
+}
+.Option {
+  margin-top: 30px;
+  width: 85%;
+  height: 900px;
+  background: #000000;
+}

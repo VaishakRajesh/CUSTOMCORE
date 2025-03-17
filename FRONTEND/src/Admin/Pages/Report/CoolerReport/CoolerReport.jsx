@@ -10,8 +10,8 @@ const CoolerReport = () => {
 
     const fetchCooler = () => {
         axios.get("http://localhost:5000/collectionCooler").then((response) => {
-            console.log(response.data);
-            setCoolerArray(response.data);
+            console.log(response.data.cooler);
+            setCoolerArray(response.data.cooler);
         })
     }
     const deleteData = (id) => {

@@ -10,8 +10,8 @@ const CaseReport = () => {
 
     const fetchCase = () => {
         axios.get("http://localhost:5000/collectionCase").then((response) => {
-            console.log(response.data);
-            setCaseArray(response.data);
+            console.log(response.data.cases);
+            setCaseArray(response.data.cases);
         })
     }
     const deleteData = (id) => {

@@ -37,7 +37,7 @@ const Login = () => {
        
        if(login === "user"){
         sessionStorage.setItem("uid",id)
-        navigate("/User/UserHomePage")
+        navigate("/User")
 
        }
        if(login === "admin"){

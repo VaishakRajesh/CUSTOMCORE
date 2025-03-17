@@ -6,7 +6,8 @@ import { Button } from '@mui/material'
 import BuliderNavbar from '../BuliderNavbar/BuliderNavbar'
 const BuliderProfile = () => {
   return (
-    <div><BuliderNavbar/>
+    <div>
+      {/* <BuliderNavbar/> */}
     <div className={Style.body}>
       <div className={Style.card}>
         <div className={Style.Profileimgs}>
@@ -18,8 +19,8 @@ const BuliderProfile = () => {
         <div className={Style.text}>Address: hudbugbgvubfvn</div>
         <div className={Style.text}>Place: bbdch</div>
         <div className={Style.Button}>
-          <Link to="/BuliderEditProfile"><Button variant="outlined" sx={{ bgcolor: 'white', color: '#1a1a2e', height: '40px', width: '160px', fontSize: '15px', fontFamily: 'Arial Black', border: '1px solid white', borderRadius: '40px' }}>Edit Profile</Button></Link>
-          <Link to="/BuliderchangePassword"><Button variant="outlined" sx={{ bgcolor: 'white', color: '#1a1a2e', height: '40px', width: '185px', fontSize: '13px', fontFamily: 'Arial Black', border: '1px solid white', borderRadius: '40px' }}>Change Password</Button></Link>
+          <Link to="/PcBulider/BuliderEditProfile"><Button variant="outlined" sx={{ bgcolor: 'white', color: '#1a1a2e', height: '40px', width: '160px', fontSize: '15px', fontFamily: 'Arial Black', border: '1px solid white', borderRadius: '40px' }}>Edit Profile</Button></Link>
+          <Link to="/PcBulider/BuliderchangePassword"><Button variant="outlined" sx={{ bgcolor: 'white', color: '#1a1a2e', height: '40px', width: '185px', fontSize: '13px', fontFamily: 'Arial Black', border: '1px solid white', borderRadius: '40px' }}>Change Password</Button></Link>
         </div>
       </div>
     </div>

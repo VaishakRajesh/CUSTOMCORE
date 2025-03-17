@@ -53,6 +53,7 @@ import BuliderComplaint from "./Pc Buliders/BuliderComplaint/BuliderComplaint";
 import App from "./Admin/App";
 import Default from "./User/UserHomepage/Default";
 import EasyToBulid from "./User/EasyToBulid/EasyToBulid";
+import BuliderNavbar from "./Pc Buliders/BuliderNavbar/BuliderNavbar";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -214,7 +215,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <UserNavbar />
+                element: <Default />
             },
             {
                 path: "UserProfile",
@@ -252,28 +253,28 @@ export const router = createBrowserRouter([
     },
     {
         path: '/PcBulider',
-        element: <BuliderHomePage />,
+        element: <BuliderNavbar />,
         children: [
 
             {
-                path: "/PcBulider/BuliderHomePage",
+                path: "",
                 element: <BuliderHomePage />
             },
 
             {
-                path: "/PcBulider/BuliderChangePassword",
+                path: "BuliderChangePassword",
                 element: <BuliderChangePassword />
             },
             {
-                path: "/PcBulider/BuliderEditProfile",
+                path: "BuliderEditProfile",
                 element: <BuliderEditProfile />
             },
             {
-                path: "/PcBulider/BuliderProfile",
+                path: "BuliderProfile",
                 element: <BuliderProfile />
             },
             {
-                path: "/PcBulider/BuliderComplaint",
+                path: "BuliderComplaint",
                 element: <BuliderComplaint />
             },
 

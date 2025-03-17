@@ -10,8 +10,8 @@ const StorageReport = () => {
 
     const fetchStorage = () => {
         axios.get("http://localhost:5000/collectionStorage").then((response) => {
-            console.log(response.data);
-            setStorageArray(response.data);
+            console.log(response.data.storage);
+            setStorageArray(response.data.storage);
         })
     }
     const deleteData = (id) => {

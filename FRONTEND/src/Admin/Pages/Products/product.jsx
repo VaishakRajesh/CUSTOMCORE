@@ -9,9 +9,9 @@ const Product = () => {
   const [file, setFile] = useState("")
   return (
     <div className={Style.new}>
-      <Sidebar/>
+      {/* <Sidebar/> */}
     <div className={Style.Container}>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className={Style.top}>
         <h1>Add New products</h1>
       </div>

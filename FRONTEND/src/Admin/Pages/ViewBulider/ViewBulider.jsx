@@ -6,9 +6,9 @@ import Img from './img/1.png'
 const ViewBulider = () => {
     return (
         <div className={Style.Body}>
-            <Sidebar />
+            {/* <Sidebar /> */}
             <div className={Style.container}>
-                <Navbar />
+                {/* <Navbar /> */}
                 <div className={Style.ViewUser}>
                     <div className={Style.Title}>
                         <div className={Style.TitleText}>Name</div>

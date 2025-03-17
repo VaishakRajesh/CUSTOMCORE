@@ -527,10 +527,10 @@ app.get("/collectionMotherboard", async (req, res) => {
     try {
         const motherboard = await Motherboard.find().populate("typeId").populate("companyId").exec();
         if (motherboard.length === 0) {
-            return res.status(404).json({ message: "Motherboard not found" })
+            return res.status(404).json({ message: "Motherboard not found" ,motherboard: []})
 
         } else {
-            res.send(motherboard).status(200)
+            res.send({motherboard}).status(200)
         }
     } catch (err) {
         console.error("Error Finding motherboard:", err)

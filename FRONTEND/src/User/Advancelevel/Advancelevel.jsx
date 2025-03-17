@@ -110,13 +110,64 @@ const Advancelevel = () => {
             setCoolerarray(response.data.cooler)
         })
     }
+    const [MotherBoard, setMotherBoard] = React.useState('');
+    const handleChange7 = (event) => {
+        setMotherBoard(event.target.value);
+    };
+    const [MotherBoardarray, setMotherBoardarray] = useState([])
+    const fetchMotherBoard = () => {
+        axios.get("http://localhost:5000/collectionMotherboard").then((response) => {
+            console.log(response.data.motherboard);
+            setMotherBoardarray(response.data.motherboard)
+        })
+    const [PcBulider, setPcBulider] = React.useState('');
+    const handleChange7 = (event) => {
+        setPcBulider(event.target.value);
+    };
+    const [PcBuliderarray, setPcBuliderarray] = useState([])
+    const fetchPcBulider = () => {
+        axios.get("http://localhost:5000/collectionPcBulider").then((response) => {
+            console.log(response.data.pcbulider);
+            setPcBuliderarray(response.data.pcbulider)
+        })
+    }
+
+
+
+    // const HandleFinish = () => {
+    //     const data = {
+    //         motherboardId: MotherBoard,
+    //         storageId: Storage,
+    //         ramId: ram,
+    //         companyId: ,
+    //         graphiccardId: graphiccard,
+    //         coolerId: Cooler,
+    //         CaseId: Case,
+    //         customStatus: '0'
+
+    //     }
+    //     axios.post("http://localhost:5000/collectioncustom", data).then((response) => {
+    //         console.log(response)
+    //         seterrors("Insert Successfully")
+    //         setOpen(true);
+
+    //     }).catch((err) => {
+    //         console.log(err);
+    //             seterrors("Data already exists")
+    //         setOpen(true);
+    //     })
+    // }
+
+
     useEffect(() => {
         fetchGPU();
+        fetchPcBulider();
         fetchRAM();
         fetchStorage();
         fetchSMPS();
         fetchCase();
         fetchCooler();
+        fetchMotherBoard();
     }, [])
     return (
         <div>
@@ -619,7 +670,7 @@ const Advancelevel = () => {
 
                         </div>
                         <div className={Style.selectbox}>
-                            <div className={Style.Selecttext}>Select the Case</div>
+                            <div className={Style.Selecttext}>Select the MotherBoard</div>
                             <div className={Style.select}>
                                 <FormControl
                                     variant="standard"
@@ -629,13 +680,13 @@ const Advancelevel = () => {
                                         id="demo-simple-select-standard-label"
                                         sx={{ color: "white" }} // White label text
                                     >
-                                        Case
+                                        MotherBoard
                                     </InputLabel>
                                     <Select
                                         labelId="demo-simple-select-standard-label"
                                         id="demo-simple-select-standard"
-                                        value={age}
-                                        onChange={handleChange}
+                                        value={MotherBoard}
+                                        onChange={handleChange7}
                                         label="Age"
                                         sx={{
                                             width: "100%", // Expands select width
@@ -654,12 +705,19 @@ const Advancelevel = () => {
                                             },
                                         }}
                                     >
-                                        <MenuItem value="">
-                                            <em style={{ color: "white" }}>None</em>
-                                        </MenuItem>
-                                        <MenuItem value={10} sx={{ color: "white" }}>Ten</MenuItem>
-                                        <MenuItem value={20} sx={{ color: "white" }}>Twenty</MenuItem>
-                                        <MenuItem value={30} sx={{ color: "white" }}>Thirty</MenuItem>
+                                        {MotherBoardarray && MotherBoardarray.map((Motherboard, index) => (
+                                            <MenuItem
+                                                key={index}
+                                                value={Motherboard._id}
+                                                sx={{
+                                                    color: 'white',  // Ensures text is visible 
+                                                    backgroundColor: "black", // Matches dropdown styling
+                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
+                                                }}
+                                            >
+                                                {Motherboard.motherboardName}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                                 <div className={Style.infoicon}><InfoIcon /></div>

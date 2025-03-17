@@ -10,8 +10,8 @@ const GraphicCardReport = () => {
 
     const fetchGraphicCard = () => {
         axios.get("http://localhost:5000/collectiongraphiccard").then((response) => {
-            console.log(response.data);
-            setGraphicCardArray(response.data);
+            console.log(response.data.graphiccard);
+            setGraphicCardArray(response.data.graphiccard);
         })
     }
     const deleteData = (id) => {

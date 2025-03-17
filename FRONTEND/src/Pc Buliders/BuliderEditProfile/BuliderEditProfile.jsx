@@ -6,7 +6,8 @@ import { Button } from '@mui/material'
 import BuliderNavbar from '../BuliderNavbar/BuliderNavbar'
 const BuliderEditProfile = () => {
   return (
-    <div><BuliderNavbar/>
+    <div>
+      {/* <BuliderNavbar/> */}
       <div className={Style.body}>
         <div className={Style.card}>
           <div className={Style.Profileimg}>

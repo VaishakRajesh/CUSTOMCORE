@@ -9,7 +9,7 @@ const Default = () => {
                     
         <div className={Styles.Mainbody}>
                     <h1 className={Styles.h1}>Let's Build PC Easily Online.</h1>
-                    <Link to="">
+                    <Link to="/User/EasyToBulid">
                         <Button
                             sx={{
                                 color: '#f5f5f5',

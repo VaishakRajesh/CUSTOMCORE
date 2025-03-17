@@ -14,7 +14,8 @@ const BuliderChangePassword = () => {
         event.preventDefault();
     };
     return (
-        <div><BuliderNavbar />
+        <div>
+            {/* <BuliderNavbar /> */}
             <div className={Style.body}>
                 <div className={Style.Card}>
                     <div className={Style.Oldpassword}>

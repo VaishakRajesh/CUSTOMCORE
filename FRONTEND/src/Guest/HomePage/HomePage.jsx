@@ -23,7 +23,7 @@ const HomePage = () => {
             <div className={Styles.Main}>
                 <div className={Styles.Mainbody}>
                     <h1 className={Styles.h1}>Bulid Your Dream PC</h1>
-                    <Link to="/Login"><Button sx={{ color: 'white', height: '70px', fontSize: '50px', borderRadius: '30px' }}>LOGIN<LoginIcon /></Button></Link>
+                    <Link to="/Login"><Button sx={{ color: 'white', height: '70px', fontSize: '50px', borderRadius: '30px' }}>LOGIN<LoginIcon sx={{ fontSize: '50px' }}/></Button></Link>
                 </div>
                 <div className={Styles.items1}>
                     <div className={Styles.img1}><img src={img2} alt="" height={'350px'}/></div>

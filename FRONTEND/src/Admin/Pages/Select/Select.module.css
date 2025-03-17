@@ -15,6 +15,7 @@
     width: 98%;
     border-radius: 50px;
     margin: 30px;
+    align-items: center;
   }
   
   .Button button {

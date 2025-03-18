@@ -735,6 +735,6 @@ const Advancelevel = () => {
             </div>
         </div>
     );
-};
+}};
 
 export default Advancelevel;

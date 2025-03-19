@@ -12,7 +12,8 @@ body{
 .progessbar{
     width: 50%;
     height: 10px;
-}
+    margin-right: 500px;
+    }
 .imgbox{
     margin-top: 150px;
     height: 500px;

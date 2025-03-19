@@ -10,9 +10,11 @@ const UserHomePage = () => {
     return (
         <div className={Styles.Body}>
             <div className={Styles.Head}>
-                <div className={Styles.Logo}>
-                CUSTOMCORE 
-                </div>
+            <Link to="/User">
+            <div className={Styles.Logo}>
+            CUSTOMCORE
+            </div>
+            </Link>
                 <div className={Styles.Select}>
                     <Link to=""><Button sx={{ color: 'white', height: '50px', fontSize: '20px', borderRadius: '30px', borderBottom: '1px solid white' }}>PreBulid PC</Button></Link>
                     <Link to=""><Button sx={{ color: 'white', height: '50px', fontSize: '20px', borderRadius: '30px', borderBottom: '1px solid white' }}>Booking Details<BuildIcon /></Button></Link>

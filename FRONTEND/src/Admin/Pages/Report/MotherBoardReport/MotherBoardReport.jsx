@@ -12,8 +12,8 @@ const MotherBoardReport = () => {
     
     const fetchmotherboard = () => {
         axios.get("http://localhost:5000/collectionMotherboard").then((response) => {
-            console.log(response.data);
-            setMotherboardArray(response.data);
+            console.log(response.data.motherboard);
+            setMotherboardArray(response.data.motherboard);
         })
     }
     const deleteData = (id) => {

@@ -3,18 +3,33 @@ import Style from "./Advancelevel.module.css";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import UserNavbar from "../UserNavbar/UserNavbar";
 import InfoIcon from '@mui/icons-material/Info';
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 
-const steps = ["CPU", "GPU", "RAM", "Storage", "Power Supply", "Case", "Cooler", "FINAL"];
+const steps = ["CPU", "GPU", "RAM", "Storage", "Power Supply", "Case", "Cooler", "Motherboard", "FINAL"];
 
 const Advancelevel = () => {
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [completed, setCompleted] = React.useState({});
+    const [activeStep, setActiveStep] = useState(0);
+    const [completed, setCompleted] = useState({});
+    const [age, setAge] = useState(''); // CPU
+    const [graphiccard, setGraphiccard] = useState('');
+    const [Graphiccardarray, setGraphiccardarray] = useState([]);
+    const [ram, setRam] = useState('');
+    const [RAMarray, setRAMarray] = useState([]);
+    const [storage, setStorage] = useState('');
+    const [Storagearray, setStoragearray] = useState([]);
+    const [SMPS, setSMPS] = useState('');
+    const [SMPSarray, setSMPSarray] = useState([]);
+    const [Case, setCase] = useState('');
+    const [Casearray, setCasearray] = useState([]);
+    const [Cooler, setCooler] = useState('');
+    const [Coolerarray, setCoolerarray] = useState([]);
+    const [Motherboard, setMotherboard] = useState('');
+    const [Motherboardarray, setMotherboardarray] = useState([]);
+    const [pcBuilder, setPcBuilder] = useState('');
+    const [PcBuilderarray, setPcBuilderarray] = useState([]);
 
     const totalSteps = () => steps.length;
     const completedSteps = () => Object.keys(completed).length;
@@ -39,158 +54,90 @@ const Advancelevel = () => {
         setActiveStep(0);
         setCompleted({});
     };
-    const [age, setage] = React.useState('');
-    const handleChange = (event) => {
-        setage(event.target.value);
-    };
 
-    const [graphiccard, setgraphiccard] = React.useState('');
-    const handleChange1 = (event) => {
-        setgraphiccard(event.target.value);
-    };
-    const [Graphiccardarray, setGraphiccardarray] = useState([])
+    const handleChange = (event) => setAge(event.target.value);
+    const handleChange1 = (event) => setGraphiccard(event.target.value);
+    const handleChange2 = (event) => setRam(event.target.value);
+    const handleChange3 = (event) => setStorage(event.target.value);
+    const handleChange4 = (event) => setSMPS(event.target.value);
+    const handleChange5 = (event) => setCase(event.target.value);
+    const handleChange6 = (event) => setCooler(event.target.value);
+    const handleChange7 = (event) => setMotherboard(event.target.value);
+    const handleChange8 = (event) => setPcBuilder(event.target.value);
+
     const fetchGPU = () => {
-        axios.get("http://localhost:5000/collectionGraphiccard").then((response) => {
-            console.log(response.data.graphiccard);
-            setGraphiccardarray(response.data.graphiccard)
-        })
-    }
-    const [ram, setram] = React.useState('');
-    const handleChange2 = (event) => {
-        setram(event.target.value);
+        axios.get("http://localhost:5000/collectionGraphiccard")
+            .then((response) => setGraphiccardarray(response.data.graphiccard))
+            .catch((err) => console.log(err));
     };
-    const [RAMarray, setRAMarray] = useState([])
+
     const fetchRAM = () => {
-        axios.get("http://localhost:5000/collectionRam").then((response) => {
-            console.log(response.data.ram);
-            setRAMarray(response.data.ram)
-        })
-    }
-    const [Storage, setStorage] = React.useState('');
-    const handleChange3 = (event) => {
-        setStorage(event.target.value);
+        axios.get("http://localhost:5000/collectionRam")
+            .then((response) => setRAMarray(response.data.ram))
+            .catch((err) => console.log(err));
     };
-    const [Storagearray, setStoragearray] = useState([])
+
     const fetchStorage = () => {
-        axios.get("http://localhost:5000/collectionStorage").then((response) => {
-            console.log(response.data.storage);
-            setStoragearray(response.data.storage)
-        })
-    }
-    const [SMPS, setSMPS] = React.useState('');
-    const handleChange4 = (event) => {
-        setSMPS(event.target.value);
+        axios.get("http://localhost:5000/collectionStorage")
+            .then((response) => setStoragearray(response.data.storage))
+            .catch((err) => console.log(err));
     };
-    const [SMPSarray, setSMPSarray] = useState([])
+
     const fetchSMPS = () => {
-        axios.get("http://localhost:5000/collectionSMPS").then((response) => {
-            console.log(response.data.smps);
-            setSMPSarray(response.data.smps)
-        })
-    }
-    const [Case, setCase] = React.useState('');
-    const handleChange5 = (event) => {
-        setCase(event.target.value);
+        axios.get("http://localhost:5000/collectionSMPS")
+            .then((response) => setSMPSarray(response.data.smps))
+            .catch((err) => console.log(err));
     };
-    const [Casearray, setCasearray] = useState([])
+
     const fetchCase = () => {
-        axios.get("http://localhost:5000/collectionCase").then((response) => {
-            console.log(response.data.cases);
-            setCasearray(response.data.cases)
-        })
-    }
-    const [Cooler, setCooler] = React.useState('');
-    const handleChange6 = (event) => {
-        setCooler(event.target.value);
+        axios.get("http://localhost:5000/collectionCase")
+            .then((response) => setCasearray(response.data.cases))
+            .catch((err) => console.log(err));
     };
-    const [Coolerarray, setCoolerarray] = useState([])
+
     const fetchCooler = () => {
-        axios.get("http://localhost:5000/collectionCooler").then((response) => {
-            console.log(response.data.cooler);
-            setCoolerarray(response.data.cooler)
-        })
-    }
-    const [MotherBoard, setMotherBoard] = React.useState('');
-    const handleChange7 = (event) => {
-        setMotherBoard(event.target.value);
+        axios.get("http://localhost:5000/collectionCooler")
+            .then((response) => setCoolerarray(response.data.cooler))
+            .catch((err) => console.log(err));
     };
-    const [MotherBoardarray, setMotherBoardarray] = useState([])
-    const fetchMotherBoard = () => {
-        axios.get("http://localhost:5000/collectionMotherboard").then((response) => {
-            console.log(response.data.motherboard);
-            setMotherBoardarray(response.data.motherboard)
-        })
-    const [PcBulider, setPcBulider] = React.useState('');
-    const handleChange7 = (event) => {
-        setPcBulider(event.target.value);
+
+    const fetchMotherboard = () => {
+        axios.get("http://localhost:5000/collectionMotherboard")
+            .then((response) => setMotherboardarray(response.data.motherboard))
+            .catch((err) => console.log(err));
     };
-    const [PcBuliderarray, setPcBuliderarray] = useState([])
-    const fetchPcBulider = () => {
-        axios.get("http://localhost:5000/collectionPcBulider").then((response) => {
-            console.log(response.data.pcbulider);
-            setPcBuliderarray(response.data.pcbulider)
-        })
-    }
 
-
-
-    // const HandleFinish = () => {
-    //     const data = {
-    //         motherboardId: MotherBoard,
-    //         storageId: Storage,
-    //         ramId: ram,
-    //         companyId: ,
-    //         graphiccardId: graphiccard,
-    //         coolerId: Cooler,
-    //         CaseId: Case,
-    //         customStatus: '0'
-
-    //     }
-    //     axios.post("http://localhost:5000/collectioncustom", data).then((response) => {
-    //         console.log(response)
-    //         seterrors("Insert Successfully")
-    //         setOpen(true);
-
-    //     }).catch((err) => {
-    //         console.log(err);
-    //             seterrors("Data already exists")
-    //         setOpen(true);
-    //     })
-    // }
-
+    const fetchPcBuilder = () => {
+        axios.get("http://localhost:5000/collectionPcBulider")
+            .then((response) => setPcBuilderarray(response.data.pcbulider))
+            .catch((err) => console.log(err));
+    };
 
     useEffect(() => {
         fetchGPU();
-        fetchPcBulider();
         fetchRAM();
         fetchStorage();
         fetchSMPS();
         fetchCase();
         fetchCooler();
-        fetchMotherBoard();
-    }, [])
+        fetchMotherboard();
+        fetchPcBuilder();
+    }, []);
+
     return (
         <div>
-            {/* <UserNavbar /> */}
             <div className={Style.body}>
                 <div className={Style.progessbar}>
-                    <Box sx={{ width: "100%", mt: 3 }}> {/* Stepper moved up */}
-                        <Stepper
-                            nonLinear
-                            activeStep={activeStep}
-                            sx={{
-                                backgroundColor: "transparent",
-                                padding: "10px",
-                                "& .MuiStepConnector-line": {
-                                    borderColor: "white",
-                                },
-                            }}
-                        >
+                    <Box sx={{ width: "100%", mt: 3 }}>
+                        <Stepper nonLinear activeStep={activeStep} sx={{
+                            backgroundColor: "transparent",
+                            padding: "10px",
+                            "& .MuiStepConnector-line": { borderColor: "white" },
+                        }}>
                             {steps.map((label, index) => (
                                 <Step key={label} completed={completed[index]}>
                                     <StepButton
                                         color="inherit"
-                                        // onClick={handleStep(index)}
                                         sx={{
                                             color: "white",
                                             "& .MuiStepLabel-label": {
@@ -209,91 +156,23 @@ const Advancelevel = () => {
                             ))}
                         </Stepper>
                     </Box>
-                    {/* 
-        <Box sx={{ textAlign: "center", mt: 4 }}>
-          {allStepsCompleted() ? (
-            <Typography sx={{ color: "white", fontSize: "20px", mb: 2 }}>
-              All steps completed - You’re finished!
-            </Typography>
-          ) : (
-            <Typography sx={{ color: "white", fontSize: "20px", mb: 2 }}>
-              Step {activeStep + 1}: {steps[activeStep]}
-            </Typography>
-          )}
-
-          <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ fontSize: "16px", color: "white", border: "1px solid white" }}
-            >
-              Back
-            </Button>
-            <Button
-              onClick={handleNext}
-              sx={{ fontSize: "16px", color: "black", backgroundColor: "white" }}
-            >
-              Next
-            </Button>
-            {activeStep !== steps.length && !completed[activeStep] && (
-              <Button onClick={handleComplete} sx={{ fontSize: "16px", color: "white", border: "1px solid white" }}>
-                {completedSteps() === totalSteps() - 1 ? "Finish" : "Complete Step"}
-              </Button>
-            )}
-            {allStepsCompleted() && (
-              <Button onClick={handleReset} sx={{ fontSize: "16px", color: "white", border: "1px solid white" }}>
-                Reset
-              </Button>
-            )}
-          </Box>
-        </Box> */}
                 </div>
 
                 {activeStep === 0 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the CPU</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        CPU
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>CPU</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
                                         value={age}
                                         onChange={handleChange}
-                                        label="Age"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        <MenuItem value="">
-                                            <em style={{ color: "white" }}>None</em>
-                                        </MenuItem>
+                                        <MenuItem value=""><em style={{ color: "white" }}>None</em></MenuItem>
                                         <MenuItem value={10} sx={{ color: "white" }}>Ten</MenuItem>
                                         <MenuItem value={20} sx={{ color: "white" }}>Twenty</MenuItem>
                                         <MenuItem value={30} sx={{ color: "white" }}>Thirty</MenuItem>
@@ -302,59 +181,26 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
 
                 {activeStep === 1 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the GPU</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }}
-                                >
-                                    <InputLabel
-                                        id="gpu-select-label"
-                                        sx={{ color: "white" }}
-                                    >
-                                        GPU
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>GPU</InputLabel>
                                     <Select
-                                        labelId="gpu-select-label"
-                                        id="gpu-select"
                                         value={graphiccard}
                                         onChange={handleChange1}
-                                        label="GPU"
-                                        sx={{
-                                            width: "100%",
-                                            color: "white",
-                                            "& .MuiSvgIcon-root": { color: "white" },
-                                            "& .MuiInputBase-input": { color: "white" },
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black",
-                                                    color: "white !important",
-                                                    width: "200px",
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        {Graphiccardarray && Graphiccardarray.map((Graphiccard, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={Graphiccard._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
-                                                {Graphiccard.graphiccardName}
+                                        {Graphiccardarray.map((item) => (
+                                            <MenuItem key={item._id} value={item._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
+                                                {item.graphiccardName}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -362,7 +208,9 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 2 && (
                     <div className={Style.selectbody}>
                         <div className={Style.imgbox}>
@@ -404,8 +252,8 @@ const Advancelevel = () => {
                                             },
                                         }}
                                     >
-                                        
-                                     {RAMarray && RAMarray.map((RAM, index) => (
+
+                                        {RAMarray && RAMarray.map((RAM, index) => (
                                             <MenuItem
                                                 key={index}
                                                 value={RAM._id}
@@ -465,7 +313,7 @@ const Advancelevel = () => {
                                             },
                                         }}
                                     >
-                                         {Storagearray && Storagearray.map((Storage, index) => (
+                                        {Storagearray && Storagearray.map((Storage, index) => (
                                             <MenuItem
                                                 key={index}
                                                 value={Storage._id}
@@ -685,7 +533,7 @@ const Advancelevel = () => {
                                     <Select
                                         labelId="demo-simple-select-standard-label"
                                         id="demo-simple-select-standard"
-                                        value={MotherBoard}
+                                        value={Motherboard}
                                         onChange={handleChange7}
                                         label="Age"
                                         sx={{
@@ -705,7 +553,7 @@ const Advancelevel = () => {
                                             },
                                         }}
                                     >
-                                        {MotherBoardarray && MotherBoardarray.map((Motherboard, index) => (
+                                        {Motherboardarray && Motherboardarray.map((Motherboard, index) => (
                                             <MenuItem
                                                 key={index}
                                                 value={Motherboard._id}
@@ -724,17 +572,47 @@ const Advancelevel = () => {
                             </div>
                         </div>
                     </div>)}
-                    
+                {activeStep === 8 && (
+                    <div className={Style.selectbody}>
+                        <div className={Style.imgbox}></div>
+                        <div className={Style.selectbox}>
+                            <div className={Style.Selecttext}>Select the PC Builder</div>
+                            <div className={Style.select}>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>PC Builder</InputLabel>
+                                    <Select
+                                        value={pcBuilder}
+                                        onChange={handleChange8}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
+                                    >
+                                        {PcBuilderarray.map((item) => (
+                                            <MenuItem key={item._id} value={item._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
+                                                {item.PcBuliderName} {/* Adjust based on your API response */}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <div className={Style.infoicon}><InfoIcon /></div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <div className={Style.button}>
-                    
-                {activeStep != 0 && (
-                    <button className={Style.prevButton} onClick={handleBack}>Previous</button>)}
-                  {activeStep != 7 && (  <button className={Style.nextButton} onClick={handleNext}>Next</button>)}
-                  {activeStep === 7 && (  <button className={Style.nextButton} >Finish</button>)}
+                    {activeStep !== 0 && (
+                        <button className={Style.prevButton} onClick={handleBack}>Previous</button>
+                    )}
+                    {activeStep !== 8 && (
+                        <button className={Style.nextButton} onClick={handleNext}>Next</button>
+                    )}
+                    {activeStep === 8 && (
+                        <button className={Style.nextButton} onClick={handleComplete}>Finish</button>
+                    )}
                 </div>
             </div>
         </div>
     );
-}};
+};
 
 export default Advancelevel;

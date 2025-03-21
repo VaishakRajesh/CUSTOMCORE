@@ -7,13 +7,16 @@ import Typography from "@mui/material/Typography";
 import InfoIcon from '@mui/icons-material/Info';
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const steps = ["CPU", "GPU", "RAM", "Storage", "Power Supply", "Case", "Cooler", "Motherboard", "FINAL"];
 
 const Advancelevel = () => {
+    const { id } = useParams();
     const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState({});
-    const [age, setAge] = useState(''); // CPU
+    const [cpu, setcpu] = useState('');
+    const [cpuarray, setcpuarray] = useState([]);
     const [graphiccard, setGraphiccard] = useState('');
     const [Graphiccardarray, setGraphiccardarray] = useState([]);
     const [ram, setRam] = useState('');
@@ -28,8 +31,6 @@ const Advancelevel = () => {
     const [Coolerarray, setCoolerarray] = useState([]);
     const [Motherboard, setMotherboard] = useState('');
     const [Motherboardarray, setMotherboardarray] = useState([]);
-    const [pcBuilder, setPcBuilder] = useState('');
-    const [PcBuilderarray, setPcBuilderarray] = useState([]);
 
     const totalSteps = () => steps.length;
     const completedSteps = () => Object.keys(completed).length;
@@ -46,16 +47,43 @@ const Advancelevel = () => {
 
     const handleBack = () => setActiveStep((prev) => prev - 1);
     const handleStep = (step) => () => setActiveStep(step);
+    console.log(Motherboard)
+    console.log(storage)
+    console.log(ram)
+    console.log(graphiccard)
+    console.log(Cooler)
+    console.log(Case)
+    console.log(id)
+    console.log(sessionStorage.getItem('userName'))
     const handleComplete = () => {
-        setCompleted({ ...completed, [activeStep]: true });
-        handleNext();
+        
+        const data = {
+            motherboardId: Motherboard,
+            storageId: storage,
+            ramId: ram,
+            graphiccardId: graphiccard,
+            coolerId: Cooler,
+            CaseId: Case,
+            pcBuliderId: id,
+            userId: sessionStorage.getItem('userName')
+        };
+    
+        axios.post("http://localhost:5000/collectioncustom", data)
+            .then((response) => {
+                console.log(response);
+                alert("Insert Successfully"); // Replaced seterrors with alert
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Data already exists"); // Replaced seterrors with alert
+            });
     };
     const handleReset = () => {
         setActiveStep(0);
         setCompleted({});
     };
 
-    const handleChange = (event) => setAge(event.target.value);
+    const handleChange = (event) => setcpu(event.target.value);
     const handleChange1 = (event) => setGraphiccard(event.target.value);
     const handleChange2 = (event) => setRam(event.target.value);
     const handleChange3 = (event) => setStorage(event.target.value);
@@ -63,8 +91,12 @@ const Advancelevel = () => {
     const handleChange5 = (event) => setCase(event.target.value);
     const handleChange6 = (event) => setCooler(event.target.value);
     const handleChange7 = (event) => setMotherboard(event.target.value);
-    const handleChange8 = (event) => setPcBuilder(event.target.value);
 
+    const fetchCPU = () => {
+        axios.get("http://localhost:5000/collectionCpu")
+            .then((response) => setcpuarray(response.data.cpu))
+            .catch((err) => console.log(err));
+    };
     const fetchGPU = () => {
         axios.get("http://localhost:5000/collectionGraphiccard")
             .then((response) => setGraphiccardarray(response.data.graphiccard))
@@ -107,12 +139,6 @@ const Advancelevel = () => {
             .catch((err) => console.log(err));
     };
 
-    const fetchPcBuilder = () => {
-        axios.get("http://localhost:5000/collectionPcBulider")
-            .then((response) => setPcBuilderarray(response.data.pcbulider))
-            .catch((err) => console.log(err));
-    };
-
     useEffect(() => {
         fetchGPU();
         fetchRAM();
@@ -121,8 +147,14 @@ const Advancelevel = () => {
         fetchCase();
         fetchCooler();
         fetchMotherboard();
-        fetchPcBuilder();
+        fetchCPU();
     }, []);
+
+    // Helper functions to get component names from IDs
+    const getComponentName = (id, array, nameKey) => {
+        const item = array.find((comp) => comp._id === id);
+        return item ? item[nameKey] : "Not Selected";
+    };
 
     return (
         <div>
@@ -167,15 +199,16 @@ const Advancelevel = () => {
                                 <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
                                     <InputLabel sx={{ color: "white" }}>CPU</InputLabel>
                                     <Select
-                                        value={age}
+                                        value={cpu}
                                         onChange={handleChange}
                                         sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
                                         MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        <MenuItem value=""><em style={{ color: "white" }}>None</em></MenuItem>
-                                        <MenuItem value={10} sx={{ color: "white" }}>Ten</MenuItem>
-                                        <MenuItem value={20} sx={{ color: "white" }}>Twenty</MenuItem>
-                                        <MenuItem value={30} sx={{ color: "white" }}>Thirty</MenuItem>
+                                        {cpuarray.map((item) => (
+                                            <MenuItem key={item._id} value={item._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
+                                                {item.cpuName}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                                 <div className={Style.infoicon}><InfoIcon /></div>
@@ -213,56 +246,20 @@ const Advancelevel = () => {
 
                 {activeStep === 2 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the RAM</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        RAM
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>RAM</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
                                         value={ram}
                                         onChange={handleChange2}
-                                        label="RAM"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-
-                                        {RAMarray && RAMarray.map((RAM, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={RAM._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
+                                        {RAMarray.map((RAM) => (
+                                            <MenuItem key={RAM._id} value={RAM._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
                                                 {RAM.ramName}
                                             </MenuItem>
                                         ))}
@@ -271,58 +268,25 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 3 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the Storage</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        Storage
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>Storage</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
-                                        value={Storage}
+                                        value={storage}
                                         onChange={handleChange3}
-                                        label="Age"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        {Storagearray && Storagearray.map((Storage, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={Storage._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
+                                        {Storagearray.map((Storage) => (
+                                            <MenuItem key={Storage._id} value={Storage._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
                                                 {Storage.storageName}
                                             </MenuItem>
                                         ))}
@@ -331,58 +295,25 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 4 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the Power Supply</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        Power Supply
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>Power Supply</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
                                         value={SMPS}
                                         onChange={handleChange4}
-                                        label="Age"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        {SMPSarray && SMPSarray.map((Smps, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={Smps._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
+                                        {SMPSarray.map((Smps) => (
+                                            <MenuItem key={Smps._id} value={Smps._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
                                                 {Smps.smpsName}
                                             </MenuItem>
                                         ))}
@@ -391,58 +322,25 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 5 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the Case</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        Case
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>Case</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
                                         value={Case}
                                         onChange={handleChange5}
-                                        label="Age"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        {Casearray && Casearray.map((Case, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={Case._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
+                                        {Casearray.map((Case) => (
+                                            <MenuItem key={Case._id} value={Case._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
                                                 {Case.caseName}
                                             </MenuItem>
                                         ))}
@@ -451,58 +349,25 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 6 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
                             <div className={Style.Selecttext}>Select the Cooler</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        Cooler
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>Cooler</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
                                         value={Cooler}
                                         onChange={handleChange6}
-                                        label="Age"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        {Coolerarray && Coolerarray.map((Cooler, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={Cooler._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
+                                        {Coolerarray.map((Cooler) => (
+                                            <MenuItem key={Cooler._id} value={Cooler._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
                                                 {Cooler.coolerName}
                                             </MenuItem>
                                         ))}
@@ -511,58 +376,25 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 7 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}>
-
-                        </div>
+                        <div className={Style.imgbox}></div>
                         <div className={Style.selectbox}>
-                            <div className={Style.Selecttext}>Select the MotherBoard</div>
+                            <div className={Style.Selecttext}>Select the Motherboard</div>
                             <div className={Style.select}>
-                                <FormControl
-                                    variant="standard"
-                                    sx={{ m: 1, minWidth: 200, width: "250px", color: "white" }} // Increased width
-                                >
-                                    <InputLabel
-                                        id="demo-simple-select-standard-label"
-                                        sx={{ color: "white" }} // White label text
-                                    >
-                                        MotherBoard
-                                    </InputLabel>
+                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
+                                    <InputLabel sx={{ color: "white" }}>Motherboard</InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-standard-label"
-                                        id="demo-simple-select-standard"
                                         value={Motherboard}
                                         onChange={handleChange7}
-                                        label="Age"
-                                        sx={{
-                                            width: "100%", // Expands select width
-                                            color: "white", // White text
-                                            // backgroundColor: "black", // Black background
-                                            "& .MuiSvgIcon-root": { color: "white" }, // White dropdown arrow
-                                            "& .MuiInputBase-input": { color: "white" }, // White input text
-                                        }}
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    backgroundColor: "black", // Dropdown black
-                                                    color: "white", // Dropdown text white
-                                                    width: "200px", // Dropdown width increased
-                                                },
-                                            },
-                                        }}
+                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
+                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
                                     >
-                                        {Motherboardarray && Motherboardarray.map((Motherboard, index) => (
-                                            <MenuItem
-                                                key={index}
-                                                value={Motherboard._id}
-                                                sx={{
-                                                    color: 'white',  // Ensures text is visible 
-                                                    backgroundColor: "black", // Matches dropdown styling
-                                                    "&:hover": { backgroundColor: "#333" } // Slight hover effect
-                                                }}
-                                            >
+                                        {Motherboardarray.map((Motherboard) => (
+                                            <MenuItem key={Motherboard._id} value={Motherboard._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
                                                 {Motherboard.motherboardName}
                                             </MenuItem>
                                         ))}
@@ -571,29 +403,36 @@ const Advancelevel = () => {
                                 <div className={Style.infoicon}><InfoIcon /></div>
                             </div>
                         </div>
-                    </div>)}
+                    </div>
+                )}
+
                 {activeStep === 8 && (
                     <div className={Style.selectbody}>
-                        <div className={Style.imgbox}></div>
-                        <div className={Style.selectbox}>
-                            <div className={Style.Selecttext}>Select the PC Builder</div>
-                            <div className={Style.select}>
-                                <FormControl variant="standard" sx={{ m: 1, minWidth: 200, width: "250px" }}>
-                                    <InputLabel sx={{ color: "white" }}>PC Builder</InputLabel>
-                                    <Select
-                                        value={pcBuilder}
-                                        onChange={handleChange8}
-                                        sx={{ width: "100%", color: "white", "& .MuiSvgIcon-root": { color: "white" }, "& .MuiInputBase-input": { color: "white" } }}
-                                        MenuProps={{ PaperProps: { sx: { backgroundColor: "black", color: "white", width: "200px" } } }}
-                                    >
-                                        {PcBuilderarray.map((item) => (
-                                            <MenuItem key={item._id} value={item._id} sx={{ color: "white", backgroundColor: "black", "&:hover": { backgroundColor: "#333" } }}>
-                                                {item.PcBuliderName} {/* Adjust based on your API response */}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                                <div className={Style.infoicon}><InfoIcon /></div>
+                        <div className={Style.summary}>
+                            <h2>Your PC Build Summary</h2>
+                            <div className={Style.summaryItem}>
+                                <strong>CPU:</strong> <span>{getComponentName(cpu, cpuarray, "cpuName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>GPU:</strong> <span>{getComponentName(graphiccard, Graphiccardarray, "graphiccardName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>RAM:</strong> <span>{getComponentName(ram, RAMarray, "ramName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>Storage:</strong> <span>{getComponentName(storage, Storagearray, "storageName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>Power Supply:</strong> <span>{getComponentName(SMPS, SMPSarray, "smpsName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>Case:</strong> <span>{getComponentName(Case, Casearray, "caseName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>Cooler:</strong> <span>{getComponentName(Cooler, Coolerarray, "coolerName")}</span>
+                            </div>
+                            <div className={Style.summaryItem}>
+                                <strong>Motherboard:</strong> <span>{getComponentName(Motherboard, Motherboardarray, "motherboardName")}</span>
                             </div>
                         </div>
                     </div>

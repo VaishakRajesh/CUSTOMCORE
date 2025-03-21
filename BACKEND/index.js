@@ -1583,7 +1583,7 @@ const CollectionFeedBackStructure = new mongoose.Schema({
 const Feedback = mongoose.model("CollectionFeedBack", CollectionFeedBackStructure)
 
 //feedback Post
-app.get("/collectionFeedBack", async (req, res) => {
+app.post("/collectionFeedBack", async (req, res) => {
     try {
         const { FeedbackRecation, FeedbackContent, userId, pcbuliddevId } = req.body
         let feedback = new Feedback({
@@ -1694,28 +1694,28 @@ const CollectionCpuStructure = new mongoose.Schema({
         ref: "CollectionCompany",
         required: true
     },
-    cpuImg: {
-        type: String,
-        required: true
-    },
-    cpuDetails: {
-        type: String,
-        required: true
-    },
+    // cpuImg: {
+    //     type: String,
+    //     required: true
+    // },
+    // cpuDetails: {
+    //     type: String,
+    //     required: true
+    // },
 
 })
 
 const Cpu = mongoose.model("CollectionCpu", CollectionCpuStructure)
 
 //Cpu Post
-app.get("/collectionCpu", async (req, res) => {
+app.post("/collectionCpu", async (req, res) => {
     try {
-        const { cpuName, companyId, cpuImg, cpuDetails } = req.body
+        const { cpuName, companyId } = req.body
         let cpu = new Cpu({
             cpuName, 
             companyId, 
-            cpuImg, 
-            cpuDetails
+            // cpuImg, 
+            // cpuDetails
         })
         await cpu.save();
         res.json({ message: " CPU Inserted Successfully " })
@@ -1780,7 +1780,7 @@ app.put("/collectionCpu/:id", async (req, res) => {
         const { cpuName, companyId, cpuImg, cpuDetails } = req.body;
         const updatedCpu = await Cpu.findByIdAndUpdate(
             id,
-            { cpuName, companyId, cpuImg, cpuDetails },
+            { cpuName, companyId },
             { new: true }
         );
         res.json(updatedCpu)
@@ -1795,10 +1795,10 @@ app.put("/collectionCpu/:id", async (req, res) => {
 app.patch("/collectionCpu/:id", async (req, res) => {
     const id = req.params.id
     try {
-        const { cpuName, companyId, cpuImg, cpuDetails } = req.body;
+        const { cpuName, companyId} = req.body;
         const updatedCpu = await Cpu.findByIdAndUpdate(
             id,
-            { cpuName, companyId, cpuImg, cpuDetails },
+            { cpuName, companyId },
             { new: true }
         );
         res.json(updatedCpu)
@@ -2021,11 +2021,6 @@ const CollectionCustomStructure = new mongoose.Schema({
         ref: "CollectionRam",
         required: true
     },
-    companyId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CollectionCompany",
-        required: true
-    },
     graphiccardId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "CollectionGraphicCard",
@@ -2044,15 +2039,13 @@ const CollectionCustomStructure = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "CollectionUser",
-        required: true
     },
     customStatus: {
         type: String,
-        required: true
     },
-    pcbuliddevId: {
+    pcBuliderId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Collectionpcbuliddev",
+        ref: "CollectionPcBulider",
         required: true
     }
 })
@@ -2060,7 +2053,7 @@ const CollectionCustomStructure = new mongoose.Schema({
 const Custom = mongoose.model("CollectionCustom", CollectionCustomStructure)
 
 //Custom Post
-app.get("/collectioncustom", async (req, res) => {
+app.post("/collectioncustom", async (req, res) => {
     try {
         const { motherboardId, storageId, ramId, companyId, graphiccardId, coolerId, CaseId, userId, customStatus, pcbuliddevId } = req.body
         let custom = new Custom({
@@ -2418,6 +2411,27 @@ app.get("/collectionPcBuliderById/:id", async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" })
     }
 })
+
+app.get("/collectionPcBuliderByIdAll/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(id);
+
+        // Find PC builders by placeId
+        const pcBulider = await PcBulider.find({ placeId: id });
+
+        // Check if the result is an empty array
+        if (pcBulider.length === 0) {
+            return res.status(404).json({ message: "No PC Builders Found for the Given Place ID" });
+        }
+
+        // Return the found PC builders
+        res.status(200).json({pcBulider});
+    } catch (err) {
+        console.error("Error Finding PC Builders:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 
 //pcBulider delete
 app.delete("/collectionPcBulider/:id", async (req, res) => {

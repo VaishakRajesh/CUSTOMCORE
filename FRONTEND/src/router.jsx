@@ -54,6 +54,7 @@ import App from "./Admin/App";
 import Default from "./User/UserHomepage/Default";
 import EasyToBulid from "./User/EasyToBulid/EasyToBulid";
 import BuliderNavbar from "./Pc Buliders/BuliderNavbar/BuliderNavbar";
+import PcBuliderSelect from "./User/PcBuliderSelect/PcBuliderSelect";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -238,7 +239,7 @@ export const router = createBrowserRouter([
                 element: <UserNavbar />
             },
             {
-                path: "Advancelevel",
+                path: "Advancelevel/:id",
                 element: <Advancelevel />
             },
             {
@@ -248,6 +249,10 @@ export const router = createBrowserRouter([
             {
                 path: "EasyToBulid",
                 element: <EasyToBulid />
+            },
+            {
+                path: "PcBuliderSelect",
+                element: <PcBuliderSelect />
             },
         ]
     },

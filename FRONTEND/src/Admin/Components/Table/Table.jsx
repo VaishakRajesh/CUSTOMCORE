@@ -7,49 +7,51 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-const List = () => {
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
-      
+
+const UserList = () => {
+    function createData(id, username, email, fullName, registrationDate) {
+        return { id, username, email, fullName, registrationDate };
+    }
+    
     const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-      ];
-  return (
-    <TableContainer component={Paper} className={Styles.tables}>
-    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-      <TableHead>
-        <TableRow>
-          <TableCell className={Styles.TableCell}>Dessert (100g serving)</TableCell>
-          <TableCell className={Styles.TableCell}>Calories</TableCell>
-          <TableCell className={Styles.TableCell}>Fat&nbsp;(g)</TableCell>
-          <TableCell className={Styles.TableCell}>Carbs&nbsp;(g)</TableCell>
-          <TableCell className={Styles.TableCell}>Protein&nbsp;(g)</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow
-            key={row.name}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <TableCell component="th" scope="row">
-              {row.name}
-            </TableCell>
-            <TableCell className={Styles.TableCell}>{row.calories}</TableCell>
-            <TableCell className={Styles.TableCell}>{row.fat}</TableCell>
-            <TableCell className={Styles.TableCell}>{row.carbs}</TableCell>
-            <TableCell className={Styles.TableCell}>{row.protein}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
-  )
+        createData(1, 'johndoe', 'john@example.com', 'John Doe', '2023-01-15'),
+        createData(2, 'janedoe', 'jane@example.com', 'Jane Doe', '2023-02-20'),
+        createData(3, 'bobsmith', 'bob@example.com', 'Bob Smith', '2023-03-10'),
+        createData(4, 'alicej', 'alice@example.com', 'Alice Johnson', '2023-04-05'),
+        createData(5, 'maryw', 'mary@example.com', 'Mary Williams', '2023-05-12'),
+    ];
+
+    return (
+        <TableContainer component={Paper} className={Styles.tables}>
+            <Table sx={{ minWidth: 650 }} aria-label="users table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell className={Styles.TableCell}>ID</TableCell>
+                        <TableCell className={Styles.TableCell}>Username</TableCell>
+                        <TableCell className={Styles.TableCell}>Email</TableCell>
+                        <TableCell className={Styles.TableCell}>Full Name</TableCell>
+                        <TableCell className={Styles.TableCell}>Registration Date</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                                {row.id}
+                            </TableCell>
+                            <TableCell className={Styles.TableCell}>{row.username}</TableCell>
+                            <TableCell className={Styles.TableCell}>{row.email}</TableCell>
+                            <TableCell className={Styles.TableCell}>{row.fullName}</TableCell>
+                            <TableCell className={Styles.TableCell}>{row.registrationDate}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
 }
 
-export default List
+export default UserList

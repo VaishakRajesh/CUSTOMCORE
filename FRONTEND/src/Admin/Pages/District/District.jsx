@@ -1,225 +1,184 @@
-import React, { useEffect, useState } from 'react'
-import Style from './District.module.css'
-import Sidebar from '../../Components/Sidebar/Sidebar'
-import Navbar from '../../Components/Navbar/Navbar'
-import { Button, TextField } from '@mui/material'
-import axios from 'axios'
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import Slide from '@mui/material/Slide';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import Table from '@mui/material/Table';
-import { styled } from '@mui/material/styles';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import React, { useEffect, useState } from 'react';
+import Style from './District.module.css';
+import { 
+  Button, 
+  TextField, 
+  Paper, 
+  Typography, 
+  Box, 
+  Dialog, 
+  DialogActions, 
+  DialogContent, 
+  DialogContentText,
+  IconButton
+} from '@mui/material';
+import { FileUploadOutlined, DeleteOutline, Close } from '@mui/icons-material';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
-
 
 const District = () => {
-    const fetchDistrict = () => {
-        axios.get("http://localhost:5000/collectionDistrict").then((response) => {
-            console.log(response.data.district);
-            setDistrictArray(response.data.district)
-        })
+  const [open, setOpen] = useState(false);
+  const [errors, setErrors] = useState('');
+  const [district, setDistrict] = useState('');
+  const [districtArray, setDistrictArray] = useState([]);
+  const [activeSection, setActiveSection] = useState('view');
+
+  const fetchDistrict = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/collectionDistrict');
+      setDistrictArray(response.data.district);
+    } catch (error) {
+      console.error('Error fetching districts:', error);
     }
+  };
 
-
-    const deleteData = (id) => {
-        axios.delete(`http://localhost:5000/collectionDistrict/${id}`).then((response) => {
-            fetchDistrict();
-            console.log(response)
-        }).catch((err) => {
-            console.log(err);
-            
-        })
-    };
-    const columns = [
-        { field: 'id', headerName: 'ID', flex: 1 },
-        { field: 'districtName', headerName: 'District name', flex: 3 },
-        {
-            field: "action",
-            headerName: "Action",
-            flex: 1,
-            width: 350,
-            renderCell: (params) => {
-                return (
-                    <>
-                        <DeleteOutlineIcon
-                            className="Delete"
-                            onClick={() =>
-                                 deleteData(params.row._id)
-                                }
-                        />
-                    </>
-                );
-            }
-        }
-
-    ];
-
-    const paginationModel = { page: 0, pageSize: 5 };
-    const [open, setOpen] = React.useState(false);
-    const [errors, seterrors] = useState("")
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const [district, setdistrict] = useState("")
-    const [districtArray, setDistrictArray] = useState([])
-    const rowsWithId = districtArray.map((row, index) => ({ ...row, id: index + 1 }));
-
-    const HandleSubmit = () => {
-        const data = {
-            districtName: district
-        }
-        axios.post("http://localhost:5000/collectionDistrict", data).then((response) => {
-            console.log(response)
-            seterrors("Insert Successfully")
-            setOpen(true);
-            fetchDistrict();
-
-        }).catch((err) => {
-            console.log(err);
-            seterrors("Data already exists")
-            setOpen(true);
-        })
+  const deleteData = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/collectionDistrict/${id}`);
+      fetchDistrict();
+    } catch (error) {
+      console.error('Error deleting district:', error);
     }
-   
-    useEffect(() => {
-        fetchDistrict();
+  };
 
-    }, [])
-    const [ActiveSection, setActiveSection] = useState('');
+  const handleSubmit = async () => {
+    try {
+      const data = { districtName: district };
+      await axios.post('http://localhost:5000/collectionDistrict', data);
+      setErrors('District Added Successfully');
+      setDistrict('');
+      fetchDistrict();
+      setOpen(true);
+    } catch (error) {
+      console.error('Error adding district:', error);
+      setErrors('District already exists');
+      setOpen(true);
+    }
+  };
 
-    
-    return (
-        <div className={Style.Body}>
-            {/* <Sidebar /> */}
-            <div className={Style.container}>
-                {/* <Navbar /> */}
-                <div className={Style.Selectbutton} onClick={() => setActiveSection(ActiveSection === 'insert' ? '' : 'insert')}>
-                    <FileUploadOutlinedIcon />
-                </div>
-                <div className={Style.Selecttext}>Insert District</div>
-                {ActiveSection === 'insert' && (
+  useEffect(() => {
+    fetchDistrict();
+  }, []);
 
-                    <motion.div
-                        initial={{ opacity: 0, y: -50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -50 }}
-                        transition={{ duration: 0.5 }}
-                        className={Style.District}
-                    >
-                        <div className={Style.District}>
-                            <div className={Style.box}>
-                                <div className={Style.text}>Insert District<br /><br /></div>
-                                <div className={Style.TextField}>
-                                    <TextField
-                                        id="standard-multiline-flexible"
-                                        label="District Name"
-                                        multiline
-                                        maxRows={4}
-                                        variant="standard"
-                                        sx={{
-                                            width: '200px', // Set custom width
-                                            '& .MuiInputBase-root': { // Root container
-                                                minHeight: '60px', // Set minimum height
-                                            },
-                                            '& .MuiInputBase-input': { // Targets the input text
-                                                fontSize: '20px',
-                                                fontWeight: 'bold',
-                                                color: 'black',
-                                            },
-                                            '& .MuiInputLabel-root': { // Targets the label
-                                                fontSize: '20px',
-                                                fontWeight: 'bold',
-                                                color: 'black',
-                                            }
-                                        }}
-                                        onChange={(e) => setdistrict(e.target.value)} />
-                                </div>
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'districtName', headerName: 'District Name', flex: 1 },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 120,
+      renderCell: (params) => (
+        <IconButton
+          color="error"
+          onClick={() => deleteData(params.row._id)}
+        >
+          <DeleteOutline />
+        </IconButton>
+      ),
+    },
+  ];
 
+  const rowsWithId = districtArray.map((row, index) => ({ ...row, id: index + 1 }));
 
-                                <br />
-                                <div className={Style.Button}><Button onClick={HandleSubmit}>Submit</Button></div>
-                                <React.Fragment>
-                                    <Dialog
-                                        open={open}
-                                        TransitionComponent={Transition}
-                                        keepMounted
-                                        onClose={handleClose}
-                                        aria-describedby="alert-dialog-slide-description"
-                                    >
-                                        <DialogContent>
-                                            <DialogContentText id="alert-dialog-slide-description">
-                                                {errors}
-                                            </DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button onClick={handleClose}>Ok</Button>
-                                        </DialogActions>
-                                    </Dialog>
-                                </React.Fragment>
-                            </div>
+  return (
+    <div className={Style.body}>
+      <div className={Style.container}>
+        <Paper elevation={3} className={Style.paper}>
+          <Box className={Style.header}>
+            <Typography variant="h5" className={Style.title}>
+              District Management
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<FileUploadOutlined />}
+              onClick={() => setActiveSection(activeSection === 'insert' ? 'view' : 'insert')}
+              className={Style.toggleButton}
+            >
+              {activeSection === 'insert' ? 'View Districts' : 'Add District'}
+            </Button>
+          </Box>
 
-                        </div>
-                    </motion.div>
-                )}
-                {ActiveSection != 'insert' && (
+          {activeSection === 'insert' && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Box className={Style.formContainer}>
+                <TextField
+                  fullWidth
+                  label="District Name"
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  variant="outlined"
+                  className={Style.textField}
+                  InputProps={{
+                    sx: { fontSize: '1.1rem' },
+                  }}
+                  InputLabelProps={{
+                    sx: { fontSize: '1.1rem' },
+                  }}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                  className={Style.submitButton}
+                  disabled={!district.trim()}
+                >
+                  Add District
+                </Button>
+              </Box>
+            </motion.div>
+          )}
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                    >
+          {activeSection === 'view' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Box className={Style.tableContainer}>
+                <DataGrid
+                  rows={rowsWithId}
+                  columns={columns}
+                  initialState={{ pagination: { paginationModel: { page: 0, pageSize: 5 } } }}
+                  pageSizeOptions={[5, 10, 20]}
+                  sx={{ 
+                    border: 0,
+                    '& .MuiDataGrid-columnHeaders': {
+                      backgroundColor: '#f5f5f5',
+                    },
+                  }}
+                  autoHeight
+                />
+              </Box>
+            </motion.div>
+          )}
+        </Paper>
 
-                        <div className={Style.tablediv}>
-                            <div className={Style.table}>
-                                <Paper sx={{ height: 400, width: '100%' }}>
-                                    <DataGrid
-                                        rows={rowsWithId}
-                                        columns={columns}
-                                        initialState={{ pagination: { paginationModel } }}
-                                        pageSizeOptions={[5, 10]}
-                                        // checkboxSelection
-                                        sx={{ border: 0 }}
-                                    />
-                                </Paper>
-                            </div>
-                        </div>
-                    </motion.div>)}
-            </div>
-        </div>
-    )
-}
+        {/* Success/Error Dialog */}
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          PaperProps={{ sx: { borderRadius: '8px' } }}
+        >
+          <DialogContent>
+            <DialogContentText className={Style.dialogText}>
+              {errors}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)} className={Style.dialogButton}>
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </div>
+  );
+};
 
-export default District
+export default District;

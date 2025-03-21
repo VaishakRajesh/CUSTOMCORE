@@ -1,83 +1,162 @@
-import React, { useState } from 'react'
-import Style from './product.module.css'
-import Sidebar from '../../Components/Sidebar/Sidebar'
-import Navbar from '../../Components/Navbar/Navbar'
-import { DriveFolderUploadOutlined } from '@mui/icons-material'
-import TextField from '@mui/material/TextField';
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
+import React, { useState } from 'react';
+import Style from './product.module.css';
+import { DriveFolderUploadOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
+import { 
+  TextField, 
+  Button, 
+  FormControl, 
+  InputLabel, 
+  OutlinedInput, 
+  InputAdornment, 
+  IconButton,
+  Grid,
+  Paper,
+  Typography
+} from '@mui/material';
+
 const Product = () => {
-  const [file, setFile] = useState("")
+  const [file, setFile] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    country: ''
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', { ...formData, file });
+  };
+
   return (
     <div className={Style.new}>
-      {/* <Sidebar/> */}
-    <div className={Style.Container}>
-      {/* <Navbar/> */}
-      <div className={Style.top}>
-        <h1>Add New products</h1>
-      </div>
-      <div className={Style.bottom}>
-        <div className={Style.left}>
-          <img src={ file ? URL.createObjectURL(file) : "../src/img/1.png"} alt="" className={Style.userimage} />
-        </div>
-        <div className={Style.right}>
-          <form>
-            <div className={Style.forminput}>
-              <label htmlFor='file'>Image: <DriveFolderUploadOutlined className={Style.icon}/></label>
-              <input type="file" id='file' onChange={e=>setFile(e.target.files[0])} style={{display:"none"}}/>
-            </div>
-            <div className={Style.forminput}>
-              <TextField
-          id="standard-multiline-flexible"
-          label="Name and surname"
-          multiline
-          maxRows={4}
-          variant="standard"
-        />
-            </div>
-            <div className={Style.forminput}>
-              <TextField
-          id="standard-multiline-flexible"
-          label="Email"
-          multiline
-          maxRows={4}
-          variant="standard"
-        />
-            </div>
-            <div className={Style.forminput}>
-              <label>Phone Number</label>
-              <TextField
-          id="standard-multiline-flexible"
-          label="Phone Number"
-          multiline
-          maxRows={4}
-          variant="standard"
-        />
-            </div>
-            <div className={Style.forminput}>
-          <TextField
-          id="standard-multiline-flexible"
-          label="Password"
-          multiline
-          maxRows={4}
-          variant="standard"
-        />
-            </div>
-            <div className={Style.forminput}>
-              <TextField
-          id="standard-multiline-flexible"
-          label="country"
-          multiline
-          maxRows={4}
-          variant="standard"
-        />
-            </div>
-            <button>Sent</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
-  )
-}
+      <div className={Style.container}>
+        <Paper elevation={3} className={Style.paper}>
+          <Typography variant="h5" className={Style.title}>
+            Add New Product
+          </Typography>
+          
+          <Grid container spacing={3} className={Style.content}>
+            {/* Left Section - Image Upload */}
+            <Grid item xs={12} md={4} className={Style.left}>
+              <div className={Style.imageContainer}>
+                <img 
+                  src={file ? URL.createObjectURL(file) : "../src/img/placeholder.png"} 
+                  alt="Product preview" 
+                  className={Style.productImage}
+                />
+                <label htmlFor="file" className={Style.uploadLabel}>
+                  <DriveFolderUploadOutlined className={Style.icon} />
+                  <span>Upload Image</span>
+                </label>
+                <input 
+                  type="file" 
+                  id="file" 
+                  accept="image/*"
+                  onChange={(e) => setFile(e.target.files[0])} 
+                  className={Style.fileInput}
+                />
+              </div>
+            </Grid>
 
-export default Product
+            {/* Right Section - Form */}
+            <Grid item xs={12} md={8} className={Style.right}>
+              <form onSubmit={handleSubmit} className={Style.form}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Product Name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      variant="outlined"
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      variant="outlined"
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Phone Number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      variant="outlined"
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel>Password</InputLabel>
+                      <OutlinedInput
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Password"
+                      />
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Country"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleInputChange}
+                      variant="outlined"
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      fullWidth
+                      className={Style.submitButton}
+                    >
+                      Submit Product
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </Grid>
+          </Grid>
+        </Paper>
+      </div>
+    </div>
+  );
+};
+
+export default Product;

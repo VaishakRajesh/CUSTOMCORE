@@ -1,193 +1,224 @@
-import React from 'react'
-import Style from './UserEditProfile.module.css'
-import img from './img/user.gif'
-import { Link } from 'react-router-dom'
-import { Button, TextField } from '@mui/material'
-import UserNavbar from '../UserNavbar/UserNavbar'
+import React, { useState } from 'react';
+import { Button, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+import Style from './UserEditProfile.module.css';
+
 const UserEditProfile = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    address: '',
+    contact: '',
+    district: '',
+    place: '',
+    photo: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        photo: URL.createObjectURL(file),
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form Data Submitted:', formData);
+  };
+
   return (
-    <div>
-      {/* <UserNavbar /> */}
-      <div className={Style.body}>
-        <div className={Style.card}>
-          <div className={Style.Profileimg}>
-            <img src={img} alt="" width={'200px'} height={'200px'} />
+    <div className={Style.container}>
+      <div className={Style.card}>
+        <h2 className={Style.title}>Edit Profile</h2>
+        <form onSubmit={handleSubmit} className={Style.form}>
+          {/* Profile Image Upload */}
+          <div className={Style.profileImg}>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              style={{ display: 'none' }}
+              id="photo-upload"
+            />
+            <label htmlFor="photo-upload" className={Style.uploadLabel}>
+              {formData.photo ? (
+                <img
+                  src={formData.photo}
+                  alt="Profile"
+                  className={Style.profileImage}
+                />
+              ) : (
+                <div className={Style.uploadPlaceholder}>Upload Photo</div>
+              )}
+            </label>
           </div>
-          <div className={Style.text}>
+
+          {/* Name, Email, Address, Contact Fields (unchanged) */}
+          <div className={Style.inputField}>
             <TextField
-              id="standard-multiline-flexible"
+              name="name"
               label="Name"
-              multiline
-              maxRows={4}
-              variant="standard"
+              value={formData.name}
+              onChange={handleChange}
+              variant="outlined"
+              fullWidth
               sx={{
-                width: '200px', // Increase width
-                '& .MuiInputBase-root': {
-                  color: 'white', // Text color
-                  fontSize: '18px', // Increase text size
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'white', // Label color
-                  fontSize: '20px', // Increase label size
-                },
-                '& .MuiInput-underline:before': {
-                  borderBottomColor: 'white', // Default underline color
-                },
-                '& .MuiInput-underline:hover:before': {
-                  borderBottomColor: 'white', // Hover underline color
-                },
-                '& .MuiInput-underline:after': {
-                  borderBottomColor: 'white', // Focused underline color
+                '& .MuiInputBase-root': { color: '#e2e8f0', fontSize: '16px' },
+                '& .MuiInputLabel-root': { color: '#e2e8f0', fontSize: '14px' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: '#2e3b5e' },
+                  '&:hover fieldset': { borderColor: '#4b5e91' },
+                  '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
               }}
             />
           </div>
-          <div className={Style.text}>
+          <div className={Style.inputField}>
             <TextField
-              id="standard-multiline-flexible"
-              label="Contact"
-              multiline
-              maxRows={4}
-              variant="standard"
-              sx={{
-                width: '200px', // Increase width
-                '& .MuiInputBase-root': {
-                  color: 'white', // Text color
-                  fontSize: '18px', // Increase text size
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'white', // Label color
-                  fontSize: '20px', // Increase label size
-                },
-                '& .MuiInput-underline:before': {
-                  borderBottomColor: 'white', // Default underline color
-                },
-                '& .MuiInput-underline:hover:before': {
-                  borderBottomColor: 'white', // Hover underline color
-                },
-                '& .MuiInput-underline:after': {
-                  borderBottomColor: 'white', // Focused underline color
-                },
-              }}
-            />
-          </div>
-          <div className={Style.text}>
-            <TextField
-              id="standard-multiline-flexible"
+              name="email"
               label="Email"
-              multiline
-              maxRows={4}
-              variant="standard"
+              value={formData.email}
+              onChange={handleChange}
+              variant="outlined"
+              fullWidth
               sx={{
-                width: '200px', // Increase width
-                '& .MuiInputBase-root': {
-                  color: 'white', // Text color
-                  fontSize: '18px', // Increase text size
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'white', // Label color
-                  fontSize: '20px', // Increase label size
-                },
-                '& .MuiInput-underline:before': {
-                  borderBottomColor: 'white', // Default underline color
-                },
-                '& .MuiInput-underline:hover:before': {
-                  borderBottomColor: 'white', // Hover underline color
-                },
-                '& .MuiInput-underline:after': {
-                  borderBottomColor: 'white', // Focused underline color
+                '& .MuiInputBase-root': { color: '#e2e8f0', fontSize: '16px' },
+                '& .MuiInputLabel-root': { color: '#e2e8f0', fontSize: '14px' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: '#2e3b5e' },
+                  '&:hover fieldset': { borderColor: '#4b5e91' },
+                  '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
               }}
             />
           </div>
-          <div className={Style.text}>
+          <div className={Style.inputField}>
             <TextField
-              id="standard-multiline-static"
+              name="address"
               label="Address"
+              value={formData.address}
+              onChange={handleChange}
               multiline
               rows={4}
-              variant="standard"
+              variant="outlined"
+              fullWidth
               sx={{
-                width: '200px',
-                '& .MuiInputBase-root': {
-                  color: 'white',
-                  fontSize: '18px',// Text color
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'white',
-                  fontSize: '20px', // Label color
-                },
-                '& .MuiInput-underline:before': {
-                  borderBottomColor: 'white', // Default underline color
-                },
-                '& .MuiInput-underline:hover:before': {
-                  borderBottomColor: 'white', // Hover underline color
-                },
-                '& .MuiInput-underline:after': {
-                  borderBottomColor: 'white', // Focused underline color
+                '& .MuiInputBase-root': { color: '#e2e8f0', fontSize: '16px' },
+                '& .MuiInputLabel-root': { color: '#e2e8f0', fontSize: '14px' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: '#2e3b5e' },
+                  '&:hover fieldset': { borderColor: '#4b5e91' },
+                  '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
               }}
             />
-
           </div>
-          <div className={Style.text}>
-          <Box sx={{ minWidth: 120, width: '200px' }}> {/* Set width to 200px */}
-  <FormControl fullWidth>
-    <InputLabel
-      variant="standard"
-      htmlFor="uncontrolled-native"
-      sx={{
-        color: 'white', // Label color
-      }}
-    >
-      Age
-    </InputLabel>
-    <NativeSelect
-      defaultValue={30}
-      inputProps={{
-        name: 'Place',
-        id: 'uncontrolled-native',
-      }}
-      sx={{
-        color: 'white', // Text color for selected option
-        backgroundColor: 'transparent',
-        fontSize: '20px', // Transparent background for the dropdown
-        '& option': {
-          backgroundColor: 'white', // Options background color
-          color: 'black', 
-          fontSize: '20px'// Options text color
-        },
-        '&:before': {
-          borderBottomColor: 'white', // Default underline color
-        },
-        '&:hover:before': {
-          borderBottomColor: 'white', // Hover underline color
-        },
-        '&:after': {
-          borderBottomColor: 'white', // Focused underline color
-        },
-      }}
-    >
-      <option value={10}>Ten</option>
-      <option value={20}>Twenty</option>
-      <option value={30}>Thirty</option>
-    </NativeSelect>
-  </FormControl>
-</Box>
-
-
+          <div className={Style.inputField}>
+            <TextField
+              name="contact"
+              label="Contact"
+              value={formData.contact}
+              onChange={handleChange}
+              variant="outlined"
+              fullWidth
+              sx={{
+                '& .MuiInputBase-root': { color: '#e2e8f0', fontSize: '16px' },
+                '& .MuiInputLabel-root': { color: '#e2e8f0', fontSize: '14px' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: '#2e3b5e' },
+                  '&:hover fieldset': { borderColor: '#4b5e91' },
+                  '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
+                },
+              }}
+            />
           </div>
-          <div className={Style.Button}>
-            <Link to=""><Button variant="outlined" sx={{ height: '50px', width: '100px', fontSize: '18px', fontFamily: 'Arial Black', border: '5px solid white', borderRadius: '50px', color: 'white' }}>Save</Button></Link>
+
+          {/* District Dropdown (Removed InputLabel) */}
+          <div className={Style.inputField}>
+            <Box sx={{ minWidth: 120, width: '100%' }}>
+              <FormControl fullWidth>
+                <NativeSelect
+                  name="district"
+                  value={formData.district}
+                  onChange={handleChange}
+                  inputProps={{ name: 'district', id: 'district' }}
+                  sx={{
+                    color: '#e2e8f0',
+                    fontSize: '16px',
+                    '& option': { backgroundColor: '#141b2d', color: '#e2e8f0' },
+                    '& option:checked': { backgroundColor: '#5b76b8', color: '#fff' }, // Highlight selected
+                  }}
+                >
+                  <option value="" disabled>Select District</option>
+                  <option value="district1">District 1</option>
+                  <option value="district2">District 2</option>
+                  <option value="district3">District 3</option>
+                </NativeSelect>
+              </FormControl>
+            </Box>
           </div>
-        </div>
+
+          {/* Place Dropdown (Removed InputLabel) */}
+          <div className={Style.inputField}>
+            <Box sx={{ minWidth: 120, width: '100%' }}>
+              <FormControl fullWidth>
+                <NativeSelect
+                  name="place"
+                  value={formData.place}
+                  onChange={handleChange}
+                  inputProps={{ name: 'place', id: 'place' }}
+                  sx={{
+                    color: '#e2e8f0',
+                    fontSize: '16px',
+                    '& option': { backgroundColor: '#141b2d', color: '#e2e8f0' },
+                    '& option:checked': { backgroundColor: '#5b76b8', color: '#fff' }, // Highlight selected
+                  }}
+                >
+                  <option value="" disabled>Select Place</option>
+                  <option value="place1">Place 1</option>
+                  <option value="place2">Place 2</option>
+                  <option value="place3">Place 3</option>
+                </NativeSelect>
+              </FormControl>
+            </Box>
+          </div>
+
+          {/* Save Button */}
+          <div className={Style.buttonContainer}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                width: '100%',
+                padding: '14px',
+                backgroundColor: '#4b5e91',
+                color: '#e2e8f0',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                borderRadius: '50px',
+                '&:hover': { backgroundColor: '#5b76b8' },
+              }}
+            >
+              Save
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserEditProfile
+export default UserEditProfile;

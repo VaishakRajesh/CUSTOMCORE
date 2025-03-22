@@ -84,9 +84,9 @@ app.get("/collectionAdminById/:id", async (req, res) => {
         const id = req.params.id
         const admin = await Admin.findById(id)
         if (admin.length === 0) {
-            return res.status(404).json({ message: " Admin not found" })
+            return res.status(404).json({ message: " Admin not found",admin:[] })
         } else {
-            res.send(admin).status(200)
+            res.send({admin}).status(200)
         }
     } catch (err) {
         console.error("Error Finding Admin:", err)
@@ -1874,9 +1874,9 @@ app.get("/collectionUser", async (req, res) => {
     try {
         const user = await User.find()
         if (user.length === 0) {
-            return res.status(404).json({ message: " User Not Found" })
+            return res.status(404).json({ message: " User Not Found", user: []})
         } else {
-            res.send(user).status(200)
+            res.send({user}).status(200)
         }
     } catch (err) {
         console.error(" Error Finding User ", err)
@@ -1890,9 +1890,9 @@ app.get("/collectionUserById/:id", async (req, res) => {
         const id = req.params.id
         const user = await User.findById(id)
         if (user.length === 0) {
-            return res.status(404).json({ message: " user not Found" })
+            return res.status(404).json({ message: " user not Found" ,user: []})
         } else {
-            res.send(user).status(200)
+            res.send({user}).status(200)
         }
     } catch (err) {
         console.error(" Error Finding User", err)
@@ -2055,7 +2055,7 @@ const Custom = mongoose.model("CollectionCustom", CollectionCustomStructure)
 //Custom Post
 app.post("/collectioncustom", async (req, res) => {
     try {
-        const { motherboardId, storageId, ramId, companyId, graphiccardId, coolerId, CaseId, userId, customStatus, pcbuliddevId } = req.body
+        const { motherboardId, storageId, ramId, companyId, graphiccardId, coolerId, CaseId, userId, customStatus, pcBuliderId } = req.body
         let custom = new Custom({
             motherboardId,
             storageId,
@@ -2066,7 +2066,7 @@ app.post("/collectioncustom", async (req, res) => {
             CaseId,
             userId,
             customStatus,
-            pcbuliddevId
+            pcBuliderId
         })
         await custom.save();
         res.json({ message: " Custom Inserted Successfully " })

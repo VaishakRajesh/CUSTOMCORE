@@ -55,7 +55,7 @@ const Default = () => {
                         </Button>
                     </Link>
                     <p className={Styles.p}>Easy To Build makes customizing a PC simple and hassle-free.</p>
-                    <Link to="/User/Advancelevel">
+                    <Link to="/User/PcBuliderSelect">
                         <Button
                             sx={{
                                 color: '#a9a9a9', // Metallic silver

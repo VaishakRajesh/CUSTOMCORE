@@ -55,6 +55,7 @@ import Default from "./User/UserHomepage/Default";
 import EasyToBulid from "./User/EasyToBulid/EasyToBulid";
 import BuliderNavbar from "./Pc Buliders/BuliderNavbar/BuliderNavbar";
 import PcBuliderSelect from "./User/PcBuliderSelect/PcBuliderSelect";
+import Editprofile from "./Admin/Pages/Editprofile/Editprofile";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -207,6 +208,10 @@ export const router = createBrowserRouter([
             {
                 path: "CPUReport",
                 element: <CPUReport />
+            },
+            {
+                path: "Editprofile",
+                element: <Editprofile />
             },
         ]
     },

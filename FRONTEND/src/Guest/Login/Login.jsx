@@ -41,13 +41,13 @@ const Login = () => {
 
        }
        if(login === "admin"){
-        sessionStorage.setItem("uid",id)
+        sessionStorage.setItem("aid",id)
         navigate("/Admin")
 
        }
        if(login === "pcBulider"){
-        sessionStorage.setItem("uid",id)
-        navigate("/PcBulider/BuliderHomePage")
+        sessionStorage.setItem("pid",id)
+        navigate("/PcBulider")
 
        }
 
@@ -65,9 +65,9 @@ const Login = () => {
         <img src={sideimg} width='1200px' alt="" />
       </div>
       <div className={Styles.Login}>
-{
+{/* {
     sessionStorage.getItem("aid")
-}
+} */}
 <Box spacing={2} direction="column" component={'form'} onSubmit={handleSubmit}>
         <div className={Styles.username}>
         <FormControl sx={{ m: 1, width: '30ch'}}variant="outlined">

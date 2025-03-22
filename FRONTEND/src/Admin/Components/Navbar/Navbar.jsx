@@ -71,7 +71,7 @@ const Navbar = () => {
           <div className={Style.Item}>
             <FormatListBulletedIcon className={Style.Icon} />
           </div>
-<Link to={'/Profile'}>         <div className={Style.Item}>
+<Link to={'/Admin/Profile'}>         <div className={Style.Item}>
             <img src="../src/Img/1.png" alt="" className={Style.Avater} />
           </div></Link> 
         </div>

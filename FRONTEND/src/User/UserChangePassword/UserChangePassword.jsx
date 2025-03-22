@@ -1,48 +1,102 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Style from './UserChangePassword.module.css'
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff, LockReset } from '@mui/icons-material';
 import UserNavbar from '../UserNavbar/UserNavbar';
+
 const UserChangePassword = () => {
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [passwordMatch, setPasswordMatch] = useState(true);
+    
+    // Form data state
+    const [formData, setFormData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const handleMouseUpPassword = (event) => {
-        event.preventDefault();
+
+    const handleChange = (field) => (e) => {
+        setFormData({
+            ...formData,
+            [field]: e.target.value
+        });
+        
+        // Check password match if needed
+        if (field === 'confirmPassword' || field === 'newPassword') {
+            if (field === 'confirmPassword') {
+                setPasswordMatch(e.target.value === formData.newPassword);
+            } else {
+                setPasswordMatch(formData.confirmPassword === e.target.value);
+            }
+        }
     };
+
+    const handleSubmit = () => {
+        if (formData.newPassword !== formData.confirmPassword) {
+            setPasswordMatch(false);
+            return;
+        }
+        
+        setIsSubmitting(true);
+        
+        // Simulating API call
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setShowSuccess(true);
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                setShowSuccess(false);
+            }, 3000);
+        }, 1500);
+    };
+
     return (
         <div> 
             {/* <UserNavbar /> */}
             <div className={Style.body}>
                 <div className={Style.Card}>
+                    <div className={Style.formTitle}>
+                        <LockReset sx={{ fontSize: 32, marginRight: '10px', verticalAlign: 'middle' }} />
+                        Change Password
+                    </div>
+
                     <div className={Style.Oldpassword}>
                         <FormControl
                             sx={{ m: 1, width: '30ch', borderRadius: '50px' }}
                             variant="outlined"
                         >
                             <InputLabel
-                                htmlFor="outlined-adornment-password"
+                                htmlFor="old-password"
                                 sx={{ color: 'white' }}
                             >
                                 Old Password
                             </InputLabel>
                             <OutlinedInput
-                                id="outlined-adornment-password"
+                                id="old-password"
+                                value={formData.oldPassword}
+                                onChange={handleChange('oldPassword')}
                                 sx={{
                                     '& .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'white',
-                                        borderRadius: '50px', // Add border radius here
+                                        borderRadius: '50px',
                                     },
                                     '&:hover .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'white',
-                                        borderRadius: '50px', // Add hover radius
+                                        borderRadius: '50px',
+                                        borderWidth: '2px',
                                     },
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'white',
-                                        borderRadius: '50px', // Add focused radius
+                                        borderRadius: '50px',
                                     },
                                     input: {
                                         color: 'white',
@@ -57,14 +111,14 @@ const UserChangePassword = () => {
                                             }
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            onMouseUp={handleMouseUpPassword}
                                             edge="end"
+                                            sx={{ color: 'white' }}
                                         >
                                             {showPassword ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                label="Password"
+                                label="Old Password"
                             />
                         </FormControl>
                     </div>
@@ -75,25 +129,28 @@ const UserChangePassword = () => {
                             variant="outlined"
                         >
                             <InputLabel
-                                htmlFor="outlined-adornment-password"
+                                htmlFor="new-password"
                                 sx={{ color: 'white' }}
                             >
-                                New  Password
+                                New Password
                             </InputLabel>
                             <OutlinedInput
-                                id="outlined-adornment-password"
+                                id="new-password"
+                                value={formData.newPassword}
+                                onChange={handleChange('newPassword')}
                                 sx={{
                                     '& .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'white',
-                                        borderRadius: '50px', // Add border radius here
+                                        borderRadius: '50px',
                                     },
                                     '&:hover .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'white',
-                                        borderRadius: '50px', // Add hover radius
+                                        borderRadius: '50px',
+                                        borderWidth: '2px',
                                     },
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'white',
-                                        borderRadius: '50px', // Add focused radius
+                                        borderRadius: '50px',
                                     },
                                     input: {
                                         color: 'white',
@@ -108,46 +165,54 @@ const UserChangePassword = () => {
                                             }
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            onMouseUp={handleMouseUpPassword}
                                             edge="end"
+                                            sx={{ color: 'white' }}
                                         >
                                             {showPassword ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                label="Password"
+                                label="New Password"
                             />
                         </FormControl>
+                    </div>
+
+                    <div className={Style.passwordRequirements}>
+                        Password must be at least 8 characters with numbers and special characters
                     </div>
 
                     <div className={Style.ReEnterpassword}>
                         <FormControl
                             sx={{ m: 1, width: '30ch', borderRadius: '50px' }}
                             variant="outlined"
+                            error={!passwordMatch}
                         >
                             <InputLabel
-                                htmlFor="outlined-adornment-password"
-                                sx={{ color: 'white' }}
+                                htmlFor="confirm-password"
+                                sx={{ color: passwordMatch ? 'white' : '#f44336' }}
                             >
-                                ReEnter Password
+                                Confirm Password
                             </InputLabel>
                             <OutlinedInput
-                                id="outlined-adornment-password"
+                                id="confirm-password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange('confirmPassword')}
                                 sx={{
                                     '& .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: 'white',
-                                        borderRadius: '50px', // Add border radius here
+                                        borderColor: passwordMatch ? 'white' : '#f44336',
+                                        borderRadius: '50px',
                                     },
                                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: 'white',
-                                        borderRadius: '50px', // Add hover radius
+                                        borderColor: passwordMatch ? 'white' : '#f44336',
+                                        borderRadius: '50px',
+                                        borderWidth: '2px',
                                     },
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: 'white',
-                                        borderRadius: '50px', // Add focused radius
+                                        borderColor: passwordMatch ? 'white' : '#f44336',
+                                        borderRadius: '50px',
                                     },
                                     input: {
-                                        color: 'White',
+                                        color: 'white',
                                     },
                                 }}
                                 type={showPassword ? 'text' : 'password'}
@@ -159,20 +224,42 @@ const UserChangePassword = () => {
                                             }
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            onMouseUp={handleMouseUpPassword}
                                             edge="end"
+                                            sx={{ color: 'white' }}
                                         >
                                             {showPassword ? <VisibilityOff /> : <Visibility />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                label="Password"
+                                label="Confirm Password"
                             />
                         </FormControl>
                     </div>
 
                     <div className={Style.button}>
-                        <Button variant="outlined" sx={{ color: 'Black', borderColor: 'white', bgcolor: 'white', borderRadius: '50px', height: '50px', width: '200px', fontSize: '20px' }}>Submit</Button>
+                        <Button 
+                            variant="contained" 
+                            onClick={handleSubmit}
+                            disabled={isSubmitting}
+                            sx={{ 
+                                color: 'Black', 
+                                borderColor: 'white', 
+                                bgcolor: 'white', 
+                                borderRadius: '50px', 
+                                height: '50px', 
+                                width: '200px', 
+                                fontSize: '20px',
+                                '&:hover': {
+                                    bgcolor: '#e0e0e0',
+                                    boxShadow: '0 0 15px rgba(255, 255, 255, 0.5)'
+                                }
+                            }}>
+                            {isSubmitting ? 'Processing...' : 'Submit'}
+                        </Button>
+                    </div>
+
+                    <div className={`${Style.successMessage} ${showSuccess ? Style.showSuccess : ''}`}>
+                        Password updated successfully!
                     </div>
                 </div>
             </div>

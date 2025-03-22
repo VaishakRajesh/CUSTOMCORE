@@ -4,23 +4,25 @@
 }
 
 .container {
-    flex: 6;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
 }
 
 .Profile {
-    height: 700px;
+    height: 600px;
     width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 500px;
-    margin-top: 50px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     border-radius: 30px;
     position: relative;
     overflow: hidden;
     background: linear-gradient(to bottom right, #ffffff, #f7f7f7);
     transition: all 0.3s ease;
+    padding: 30px;
 }
 
 .Profile:hover {
@@ -31,15 +33,17 @@
 .ProfileImg {
     display: flex;
     justify-content: center;
-    margin: 80px;
+    align-items: center;
+    margin: 20px 0 40px;
     border: 3px solid #f0f0f0;
     border-radius: 50%;
     width: 150px;
     height: 150px;
     overflow: hidden;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
+    cursor: pointer;
 }
 
 .ProfileImg::after {
@@ -52,6 +56,27 @@
     border-radius: 50%;
     border: 2px solid transparent;
     animation: rotateGlow 4s linear infinite;
+}
+
+.photoOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.ProfileImg:hover .photoOverlay {
+    opacity: 1;
 }
 
 @keyframes rotateGlow {
@@ -71,61 +96,42 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
 
 .ProfileImg:hover img {
-    transform: scale(1.1);
+    filter: blur(1px);
 }
 
-.photoInput {
-    margin-top: 10px;
-    font-size: 14px;
-    width: 100%;
-    text-align: center;
+.formField {
+    width: 80%;
+    margin-bottom: 25px;
 }
 
 .Name, .Email, .Password {
-    font-size: 35px;
-    font-family: 'Times New Roman', Times, serif;
-    margin-top: 70px;
-    position: relative;
-    transition: all 0.3s ease;
-    width: 80%;
-    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
 }
 
 .PasswordTitle {
-    font-size: 35px;
+    font-size: 24px;
+    font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
-    margin-top: 80px;
+    margin-bottom: 30px;
     position: relative;
     transition: all 0.3s ease;
     width: 80%;
     text-align: center;
-}
-
-.Name::after, .Email::after, .Password::after, .PasswordTitle::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: #000;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.Name:hover::after, .Email:hover::after, .Password:hover::after, .PasswordTitle:hover::after {
-    width: 100%;
 }
 
 .inputField {
     width: 100%;
-    padding: 10px;
-    font-size: 20px;
-    font-family: 'Times New Roman', Times, serif;
+    padding: 12px;
+    font-size: 16px;
     border: 2px solid #f0f0f0;
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -141,16 +147,17 @@
 
 .Buttons {
     display: flex;
-    margin-top: 70px;
+    margin-top: 30px;
     gap: 20px;
+    width: 80%;
+    justify-content: center;
 }
 
 .ChangePasswordButton {
-    position: absolute;
-    bottom: 30px;
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .Button1 button, .ChangePasswordButton button {
@@ -205,8 +212,38 @@
     100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 
-.Profile p {
-    font-size: 18px;
-    color: #555;
-    margin-top: 200px;
+.successMessage, .errorMessage {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.successMessage {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.errorMessage {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    font-size: 20px;
+    color: #333;
+    border-radius: 30px;
 }

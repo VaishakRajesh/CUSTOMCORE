@@ -1,0 +1,77 @@
+.detailsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pageWrapper {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.headerCard {
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profileAvatar {
+  width: 100px;
+  height: 100px;
+  border: 3px solid #e0e0e0;
+}
+
+.builderName {
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 8px;
+}
+
+.contactInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cardTitle {
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #1a237e;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.infoLabel {
+  color: #757575;
+  font-weight: 500;
+  width: 120px;
+}
+
+.infoValue {
+  flex: 1;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.backButton {
+  margin-bottom: 16px;
+}
+
+.detailCard {
+  height: 100%;
+}

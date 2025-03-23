@@ -1,65 +1,159 @@
-.body{
-    background-color: #11111e;
-    height: 90vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-   justify-content: center;
-}
-.card {
-    height: 700px;
-    width: 500px;
-    border: 5px solid;
-    border-radius: 45px;
-    box-shadow: rgba(165, 165, 165, 0.56) 0px 22px 70px 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #1a1a2e;
-    animation: borderColorChange 5s infinite;
-}
-
-@keyframes borderColorChange {
-    0% {
-        border-color: #FF5733;
-    }
-    25% {
-        border-color: #33FF57;
-    }
-    50% {
-        border-color: #3357FF;
-    }
-    75% {
-        border-color: #FF33A1;
-    }
-    100% {
-        border-color: #FF5733;
-    }
-}
-
-.Profileimg {
+.body {
     display: flex;
     justify-content: center;
-    margin: 30px;
-    border: 1px solid whitesmoke;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-}
-.text{
-    color: white;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    margin: 10px;
-    font-size: 30px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.Button{
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shineEffect 6s infinite linear;
+  }
+  
+  @keyframes shineEffect {
+    0% {
+      transform: rotate(45deg) translateX(-100%);
+    }
+    100% {
+      transform: rotate(45deg) translateX(100%);
+    }
+  }
+  
+  .Profileimgs {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .Profileimg {
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease;
+    cursor: pointer;
+    animation: pulse 3s infinite alternate;
+  }
+  
+  .Profileimg:hover {
+    transform: scale(1.05);
+  }
+  
+  .Profileimg img {
+    object-fit: cover;
+    transition: filter 0.3s ease;
+    display: block;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .Profileimg:hover img {
+    filter: brightness(1.1);
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+    100% {
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+    }
+  }
+  
+  .text {
+    color: white;
+    margin: 0.7rem 0;
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s ease;
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .text:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .text:nth-child(3) { animation-delay: 0.1s; }
+  .text:nth-child(4) { animation-delay: 0.2s; }
+  .text:nth-child(5) { animation-delay: 0.3s; }
+  .text:nth-child(6) { animation-delay: 0.4s; }
+  
+  .Button {
     display: flex;
-    justify-content: space-around;
-    width: 400px;
-    margin-top: 20px;
-}
-.Profileimgs{
-border-bottom: 1px solid white;}
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2rem;
+    gap: 1rem;
+    animation: fadeIn 0.5s ease-out 0.5s forwards;
+    opacity: 0;
+  }
+  
+  @media (max-width: 600px) {
+    .Button {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .card {
+      padding: 1.5rem;
+    }
+    
+    .Profileimg img {
+      width: 150px;
+      height: 150px;
+    }
+  }
+  
+  /* Button hover effects - these will override Material UI styles when hovered */
+  .Button a:hover button {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }

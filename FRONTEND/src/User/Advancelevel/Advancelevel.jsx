@@ -32,6 +32,7 @@ const Advancelevel = () => {
     const [Motherboard, setMotherboard] = useState('');
     const [Motherboardarray, setMotherboardarray] = useState([]);
 
+    
     const totalSteps = () => steps.length;
     const completedSteps = () => Object.keys(completed).length;
     const isLastStep = () => activeStep === totalSteps() - 1;
@@ -54,7 +55,7 @@ const Advancelevel = () => {
     console.log(Cooler)
     console.log(Case)
     console.log(id)
-    console.log(sessionStorage.getItem('userName'))
+    console.log(sessionStorage.getItem('uid'))
     const handleComplete = () => {
         
         const data = {
@@ -65,7 +66,7 @@ const Advancelevel = () => {
             coolerId: Cooler,
             CaseId: Case,
             pcBuliderId: id,
-            userId: sessionStorage.getItem('userName')
+            userId: sessionStorage.getItem('uid')
         };
     
         axios.post("http://localhost:5000/collectioncustom", data)

@@ -2402,9 +2402,9 @@ app.get("/collectionPcBuliderById/:id", async (req, res) => {
         const id = req.params.id
         const pcBulider = await PcBulider.findById(id)
         if (pcBulider.length === 0) {
-            return res.status(404).json({ message: " PcBulider not Found" })
+            return res.status(404).json({ message: " PcBulider not Found",pcBulider:[] })
         } else {
-            res.send(pcBulider).status(200)
+            res.send({pcBulider}).status(200)
         }
     } catch (err) {
         console.error(" Error Finding PcBulider", err)

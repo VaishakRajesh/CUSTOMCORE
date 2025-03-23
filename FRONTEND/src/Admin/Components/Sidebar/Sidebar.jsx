@@ -35,7 +35,7 @@ const Sidebar = () => {
                         </li>
                     </Link>
                     <p className={Style.Title}>LISTS</p>
-                    <Link to="/Admin/users" style={{ textDecoration: "none" }}>
+                    <Link to="/Admin/ViewUser" style={{ textDecoration: "none" }}>
                         <li>
                             <AccountBoxIcon className={Style.icons} />
                             <span>View Users</span>

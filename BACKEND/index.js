@@ -2359,7 +2359,7 @@ const CollectionPcBuliderStructure = new mongoose.Schema({
 const PcBulider = mongoose.model("CollectionPcBulider", CollectionPcBuliderStructure)
 
 //PcBulider Post
-app.get("/collectionPcBulider", async (req, res) => {
+app.post("/collectionPcBulider", async (req, res) => {
     try {
         const { pcBuliderName, pcBuliderEmail, pcBuliderAddress, pcBuliderContact, pcBuliderProof, pcBuliderPhoto ,placeId , pcBuliderPassword } = req.body
         let pcBulider = new PcBulider({

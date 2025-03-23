@@ -86,8 +86,12 @@ export const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "users",
-                element: <List />
+                path: "ViewUser",
+                element: <ViewUser />
+            },
+            {
+                path: "ViewUserDetails/:id",
+                element: <ViewUserDetails />
             },
             {
                 path: "New",

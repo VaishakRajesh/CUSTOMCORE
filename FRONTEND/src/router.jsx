@@ -57,6 +57,7 @@ import BuliderNavbar from "./Pc Buliders/BuliderNavbar/BuliderNavbar";
 import PcBuliderSelect from "./User/PcBuliderSelect/PcBuliderSelect";
 import Editprofile from "./Admin/Pages/Editprofile/Editprofile";
 import ViewBuliderDetails from "./Admin/Pages/ViewBuliderDetails/ViewBuliderDetails";
+import BuilderBooking from "./Pc Buliders/BuliderBooking/BuliderBooking";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -295,6 +296,10 @@ export const router = createBrowserRouter([
             {
                 path: "BuliderComplaint",
                 element: <BuliderComplaint />
+            },
+            {
+                path: "BuilderBooking",
+                element: <BuilderBooking />
             },
 
 

@@ -1,12 +1,11 @@
-body{
+.Body {
     margin: 0;
+    background-color: black;
+    height: 390vh;
+    border-bottom: 0.1px solid #ffffff;
 }
-.Body{
-     background-color: black;
- height: 390vh;
- border-bottom: 0.1px solid #ffffff;
-}
-.Head{
+
+.Head {
     display: flex;
     justify-content: space-between;
     height: 90px;
@@ -16,69 +15,265 @@ body{
     border-radius: 30px;
     box-shadow: rgba(90, 90, 90, 0.25) 0px 30px 60px -12px inset, rgba(26, 26, 26, 0.3) 0px 18px 36px -18px inset;
 }
-.Main{
-   background-image: url("./img/gif.gif");
-   background-size: cover;
-   height: 100vh;
-   padding:0;
-   margin:0;
-   border-bottom: 0.1px solid #ffffff;
+
+.Main {
+    background-image: url("./img/gif.gif");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    border-bottom: 0.1px solid #ffffff;
+    position: relative;
+    overflow: hidden;
 }
-   
-.Logo{
+
+/* Add an overlay with particles */
+.Main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("./img/particles.png");
+    background-size: cover;
+    opacity: 0.3;
+    animation: floatParticles 20s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes floatParticles {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-20px) translateX(20px);
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+.Logo {
     color: white;
     font-size: 30px;
     margin: 30px;
+    position: relative;
 }
-.Select{
+
+.Logo::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    transition: width 0.5s ease;
+}
+
+.Logo:hover::after {
+    width: 100%;
+}
+
+.Select {
     margin: 40px;
 }
-.h1{
+
+.h1 {
     color: #ffffff;
     font-size: 70px;
     font-family: 'Serif Fonts';
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
 }
-.Mainbody{
-    height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
 
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(179, 196, 255, 0.6);
+    }
 }
-.items1{
-display: flex;
+
+.Mainbody {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
 }
-.items2{
-display: flex;
-margin-top: 30px;
+
+.items1, .items2 {
+    display: flex;
+    position: relative;
 }
-.itemshead1
-{
+
+.items2 {
+    margin-top: 30px;
+}
+
+.itemshead1 {
     color: #ffffff;
     margin: 200px;
     margin-top: 170px;
     font-size: 60px;
 }
-.itemshead2
-{
+
+.itemshead2 {
     color: #ffffff;
     font-size: 60px;
     margin: 200px;
 }
-.img1{
-margin: 230px;
+
+.img1 {
+    margin: 230px;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    animation: float 6s ease-in-out infinite;
 }
-.img2{
-margin-left: 150px;
-margin-top: 100px;
-height: 200px;
+
+.img1:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
 }
-.p{
+
+.img2 {
+    margin-left: 150px;
+    margin-top: 100px;
+    height: 200px;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    animation: float 8s ease-in-out infinite 1s;
+}
+
+.img2:hover {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 15px rgba(179, 196, 255, 0.6));
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.p {
     font-size: 20px;
     color: whitesmoke;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    max-width: 600px;
+    text-align: center;
+    opacity: 0.9;
+    margin-bottom: 25px;
+    animation: fadeIn 1s ease-in;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+
 a {
     text-decoration: none;
-  }
+}
+
+/* PC Parts Floating Animation */
+.pcParts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pcPart {
+    position: absolute;
+    opacity: 0.2;
+    filter: brightness(1.5);
+    animation: floatPart 15s infinite linear;
+}
+
+.pcPart:nth-child(1) {
+    top: 15%;
+    left: 10%;
+    animation-duration: 20s;
+    animation-delay: 0s;
+}
+
+.pcPart:nth-child(2) {
+    top: 25%;
+    right: 15%;
+    animation-duration: 18s;
+    animation-delay: 2s;
+}
+
+.pcPart:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-duration: 25s;
+    animation-delay: 5s;
+}
+
+.pcPart:nth-child(4) {
+    bottom: 30%;
+    right: 25%;
+    animation-duration: 22s;
+    animation-delay: 3s;
+}
+
+@keyframes floatPart {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(50px, 20px) rotate(5deg);
+    }
+    50% {
+        transform: translate(0, 50px) rotate(0deg);
+    }
+    75% {
+        transform: translate(-30px, 20px) rotate(-5deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* Button animation effects */
+.button-wrapper {
+    position: relative;
+    margin: 15px 0;
+}
+
+.button-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    bottom: -10px;
+    left: 0;
+    background: radial-gradient(ellipse at center, rgba(179, 196, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.button-wrapper:hover::after {
+    opacity: 1;
+}

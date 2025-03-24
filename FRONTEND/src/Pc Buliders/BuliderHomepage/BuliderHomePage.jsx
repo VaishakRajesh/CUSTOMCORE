@@ -79,7 +79,7 @@ const BuliderHomePage = () => {
 
 
                     <p className={Styles.p}>Update and maintain the PC stock.</p>
-                    <Link to="">
+                    <Link to="/PcBulider/BuilderBooking">
                         <Button
                             sx={{
                                 color: 'white',

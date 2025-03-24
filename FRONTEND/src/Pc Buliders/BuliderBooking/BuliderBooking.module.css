@@ -1,0 +1,203 @@
+.builderBookingContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .mainTitle {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    font-size: 2.5rem;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .content {
+      flex-direction: row;
+    }
+  }
+  
+  .buildSelection, .buildDetails {
+    flex: 1;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .buildSelection h2, .buildDetails h2 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .buildsList {
+    display: grid;
+    gap: 1rem;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .buildCard {
+    background-color: white;
+    border-radius: 6px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+  }
+  
+  .buildCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .buildCard.selected {
+    border-color: #3498db;
+    background-color: #ebf5fb;
+  }
+  
+  .statusIndicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 8px;
+  }
+  
+  .statusIndicator[data-status="Pending"] {
+    background-color: #f39c12;
+  }
+  
+  .statusIndicator[data-status="In Progress"] {
+    background-color: #3498db;
+  }
+  
+  .statusIndicator[data-status="Completed"] {
+    background-color: #2ecc71;
+  }
+  
+  .statusIndicator[data-status="pending"] {
+    background-color: #95a5a6;
+  }
+  
+  .noBuildMessage, .selectBuildPrompt {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+  
+  .detailsCard {
+    background-color: white;
+    border-radius: 6px;
+    padding: 1.5rem;
+  }
+  
+  .componentsList {
+    margin-bottom: 2rem;
+  }
+  
+  .component {
+    display: flex;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  .component:last-child {
+    border-bottom: none;
+  }
+  
+  .componentLabel {
+    flex: 1;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .componentValue {
+    flex: 2;
+    color: #7f8c8d;
+    word-break: break-all;
+  }
+  
+  .detailsBtn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin: 1rem 0 2rem;
+  }
+  
+  .detailsBtn:hover {
+    background-color: #27ae60;
+  }
+  
+  .statusUpdateForm h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.2rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  
+  select, input, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  select:focus, input:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .submitBtn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .submitBtn:hover {
+    background-color: #2980b9;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }

@@ -2107,6 +2107,26 @@ app.get("/collectionCustomById/:id", async (req, res) => {
     }
 })
 
+
+
+
+app.get("/collectionCustomByBuilder/:id", async (req, res) => {
+    try {
+        const builderId = req.params.id;
+        const customBuilds = await Custom.find({ pcBuliderId: builderId });
+        
+        if (customBuilds.length === 0) {
+            return res.status(404).json({ message: "No custom builds found for this builder" });
+        }
+        
+        res.status(200).json(customBuilds);
+    } catch (err) {
+        console.error("Error Finding Custom Builds:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
 //Custom delete
 app.delete("/collectionCustom/:id", async (req, res) => {
     try {

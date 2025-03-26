@@ -53,7 +53,7 @@ const Profile = () => {
                     ) : (
                         <>
                             <div className={Style.ProfileImg}>
-                                <img src={Img} alt="" />
+                                <img src={adminData.adminImg} alt="" />
                             </div>
                             <div className={Style.Name}>Name: {adminData.adminName}</div>
                             <div className={Style.Email}>Email: {adminData.adminEmail}</div>

@@ -1,83 +1,123 @@
-import React from 'react'
-import Style from './Navbar.module.css'
+import React, { useEffect, useState } from 'react';
+import Style from './Navbar.module.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios'; // Make sure to import axios
+
+// Material-UI Icons
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LockResetIcon from '@mui/icons-material/LockReset';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import SearchIcon from '@mui/icons-material/Search';
 import LanguageIcon from '@mui/icons-material/Language';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Input from '@mui/material/Input';
-import { IconButton, OutlinedInput } from '@mui/material';
-import { Link } from 'react-router-dom';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 const Navbar = () => {
-  return (
-    <div className={Style.Container}>
-      <div className={Style.Wrapper}>
-        <div >
-          {/* <FormControl variant="standard">
-            <InputLabel htmlFor="standard-adornment-password">Search</InputLabel>
-            <Input
-             
-              sx={{
-                borderRadius:'20px',
-                width:'250px',
-                height:'30px',
-                display:'flex',
-                alignItems:'center'
+    const [Admin, setAdmin] = useState(null);
+  
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
-              }}
-              id="standard-adornment-password"
-              type='text'
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    edge="end"
-                    sx={{width:'40px',height:'40px'}}
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl> */}
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
 
+    const toggleProfileDropdown = () => {
+        setIsProfileDropdownOpen(!isProfileDropdownOpen);
+    };
 
+    const handleLogout = () => {
+        // Implement logout logic here
+        console.log('Logging out');
+    };
+
+    useEffect(() => {
+        const adminId = sessionStorage.getItem('aid');
+        console.log('admin ID from session storage:', adminId);
+
+        const fetchData = async () => {
+            try {
+                const Response = await axios.get(`http://localhost:5000/collectionAdminById/${adminId}`);
+                console.log('admin data:', Response.data.admin);
+                setAdmin(Response.data.admin);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        if (adminId) {
+            fetchData();
+        }
+    }, []);
+
+    return (
+        <div className={Style.Container}>
+            <div className={Style.Wrapper}>
+                <div className={Style.Search}>
+                    
+                </div>
+
+                <div className={Style.Items}>
+                    <div 
+                        className={Style.Item} 
+                        onClick={toggleDropdown}
+                        style={{ position: 'relative', cursor: 'pointer' }}
+                    >
+                        <FormatListBulletedIcon className={Style.Icon} />
+                        
+                        {isDropdownOpen && (
+                            <div className={Style.Dropdown}>
+                                <Link 
+                                    to="/Admin/RegisterAdmin" 
+                                    className={Style.DropdownItem}
+                                    onClick={() => setIsDropdownOpen(false)}
+                                >
+                                    <PersonAddAltIcon className={Style.DropdownIcon} />
+                                    Add New Admin
+                                </Link>
+                                <Link 
+                                    to="/Admin/ChangePassword" 
+                                    className={Style.DropdownItem}
+                                    onClick={() => setIsDropdownOpen(false)}
+                                >
+                                    <LockResetIcon className={Style.DropdownIcon} />
+                                    Change Password
+                                </Link>
+                                <div 
+                                    className={Style.DropdownItem} 
+                                    onClick={handleLogout}
+                                >
+                                    <ExitToAppIcon className={Style.DropdownIcon} />
+                                    Logout
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    
+                    {/* Profile Image with Null Check */}
+                    <Link to={"/Admin/Profile"}>
+                        <div 
+                            className={Style.Item} 
+                            style={{ position: 'relative', cursor: 'pointer' }}
+                        >
+                            {Admin && Admin.adminImg ? (
+                                <img 
+                                    src={Admin.adminImg} 
+                                    alt="Profile" 
+                                    className={Style.Avater} 
+                                />
+                            ) : (
+                                <PersonOutlineIcon className={Style.Icon} />
+                            )}
+                        </div>
+                    </Link>
+                </div>
+            </div>
         </div>
-        <div className={Style.Items}>
-          {/* <div className={Style.Item}>
-            <LanguageIcon className={Style.Icon} />
-            English
-          </div>
-          <div className={Style.Item}>
-            <DarkModeIcon className={Style.Icon} />
-          </div>
-          <div className={Style.Item}>
-            <FullscreenExitIcon className={Style.Icon} />
-          </div>
-          <div className={Style.Item}>
-            <NotificationsNoneIcon className={Style.Icon} />
-            <div className={Style.counter}>1</div>
-          </div>
-          <div className={Style.Item}>
-            <ChatBubbleOutlineIcon className={Style.Icon} />
-            <div className={Style.counter}>2</div>
-          </div> */}
-          <div className={Style.Item}>
-            <FormatListBulletedIcon className={Style.Icon} />
-          </div>
-<Link to={'/Admin/Profile'}>         <div className={Style.Item}>
-            <img src="../src/Img/1.png" alt="" className={Style.Avater} />
-          </div></Link> 
-        </div>
-      </div>
-    </div>
-  )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

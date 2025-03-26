@@ -59,7 +59,7 @@ body {
 
 .items2 {
     display: flex;
-    margin-top: 30px;
+    /* margin-top: 30px; */
 }
 
 .itemshead1 {
@@ -81,6 +81,6 @@ body {
 
 .img2 {
     margin-left: 150px;
-    margin-top: 100px;
+    margin-top: 80px;
     height: 200px;
 }

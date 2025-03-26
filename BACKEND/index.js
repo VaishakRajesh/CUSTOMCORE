@@ -39,6 +39,10 @@ const CollectionAdminStructure = new mongoose.Schema({
     adminPassword: {
         type: String,
         required: true,
+    },
+    adminImg: {
+        type: String,
+        required: true,
     }
 });
 const Admin = mongoose.model("CollectionAdmin", CollectionAdminStructure)
@@ -47,11 +51,13 @@ const Admin = mongoose.model("CollectionAdmin", CollectionAdminStructure)
 
 app.post("/collectionAdmin", async (req, res) => {
     try {
-        const { adminName, adminEmail, adminPassword } = req.body;
+        const { adminName, adminEmail, adminPassword,adminImg } = req.body;
         let admin = new Admin({
             adminName,
             adminEmail,
-            adminPassword
+            adminPassword,
+            adminImg
+            
         });
         await admin.save();
         res.json({ message: "Admin inserted successfully " })
@@ -115,10 +121,10 @@ app.delete("/collectionAdmin/:id", async (req, res) => {
 app.put("/collectionAdmin/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        const { adminName, adminEmail, adminPassword } = req.body;
+        const { adminName, adminEmail, adminPassword,adminImg} = req.body;
         const updatedAdmin = await Admin.findByIdAndUpdate(
             id,
-            { adminName, adminEmail, adminPassword },
+            { adminName, adminEmail, adminPassword,adminImg },
             { new: true }
         );
         res.json(updatedAdmin)
@@ -133,10 +139,10 @@ app.put("/collectionAdmin/:id", async (req, res) => {
 app.patch("/collectionAdmin/:id", async (req, res) => {
     const id = req.params.id
     try {
-        const { adminName, adminEmail, adminPassword } = req.body;
+        const { adminName, adminEmail, adminPassword,adminImg } = req.body;
         const updatedAdmin = await Admin.findByIdAndUpdate(
             id,
-            { adminName, adminEmail, adminPassword },
+            { adminName, adminEmail, adminPassword,adminImg },
             { new: true }
         );
         res.json(updatedAdmin)
@@ -145,6 +151,53 @@ app.patch("/collectionAdmin/:id", async (req, res) => {
         res.status(500).send("server error")
     }
 })
+
+
+//adminreg
+
+const PATHA = "./public/images";
+const uploadA = multer({
+    storage: multer.diskStorage({
+        destination: PATHA,
+        filename: function (req, file, cb) {
+            let origialname = file.originalname;
+            let ext = origialname.split(".").pop();
+            let filename = origialname.split(".").slice(0, -1).join(".");
+            cb(null, filename + "." + ext);
+        },
+    }),
+});
+
+
+app.post('/collectionRegisterAdmin', uploadA.fields([{ name: "image", maxCount: 1 }]), async (req, res) => {
+    console.log('hi');
+
+    console.log('Received files:', req.files);
+
+    const { Name, Email, Password } = req.body;
+
+
+    var fileValue = JSON.parse(JSON.stringify(req.files));
+    var profileimgsrc = `http://127.0.0.1:${port}/images/${fileValue.image[0].filename}`;
+
+    let admin = new Admin({
+        adminName:Name, 
+        adminEmail:Email, 
+        adminPassword:Password,
+        adminImg:profileimgsrc
+
+    });
+    await admin.save();
+
+
+
+    // Log the data for debugging
+    console.log('Processed data:', { Name,Email,Password,profileimgsrc });
+
+    res.status(201).send({ message: 'Registration successful', data: {  Name,Email,Password,profileimgsrc  } });
+
+
+});
 
 
 //CollectionType

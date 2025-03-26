@@ -60,6 +60,8 @@ import ViewBuliderDetails from "./Admin/Pages/ViewBuliderDetails/ViewBuliderDeta
 import BuilderBooking from "./Pc Buliders/BuliderBooking/BuliderBooking";
 import Feedback from "./Admin/Pages/Feedback/Feedback";
 import Complaint from "./Admin/Pages/Complaint/Complaint";
+import AddAdmin from "./Admin/Pages/RegisterAdmin/RegisterAdmin";
+import RegisterAdmin from "./Admin/Pages/RegisterAdmin/RegisterAdmin";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -232,6 +234,10 @@ export const router = createBrowserRouter([
             {
                 path: "Complaint",
                 element: <Complaint />
+            },
+            {
+                path: "RegisterAdmin",
+                element: <RegisterAdmin />
             },
         ]
     },

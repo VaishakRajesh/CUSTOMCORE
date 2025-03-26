@@ -87,23 +87,29 @@ const Sidebar = () => {
                         <span>Notifications</span>
                     </li>
                     <p className={Style.Title}>F&C</p>
+                    <Link to="/Admin/Complaint" style={{ textDecoration: "none" }}>
                     <li>
                         <SmsFailedIcon className={Style.icons} />
                         <span>Complaint</span>
                     </li>
+                    </Link>
+                    <Link to="/Admin/Feedback" style={{ textDecoration: "none" }}>
                     <li>
                         <ForumIcon className={Style.icons} />
                         <span>FeedBack</span>
                     </li>
+                    </Link>
                     <li>
                         <SettingsIcon className={Style.icons} />
                         <span>Setting</span>
                     </li>
                     <p className={Style.Title}>USER</p>
+                    <Link to="/Admin/Profile" style={{ textDecoration: "none" }}>
                     <li>
                         <PersonIcon className={Style.icons} />
                         <span>Profile</span>
                     </li>
+                    </Link>
                     <li>
                         <LogoutIcon className={Style.icons} />
                         <span>Logout</span>

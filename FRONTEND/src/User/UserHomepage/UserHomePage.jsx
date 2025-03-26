@@ -8,7 +8,7 @@ import { Link, Outlet } from 'react-router-dom';
 import Default from './Default';
 const UserHomePage = () => {
     return (
-        <div className={Styles.Body}>
+        <div >
             <div className={Styles.Head}>
             <Link to="/User">
             <div className={Styles.Logo}>

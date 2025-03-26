@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './BuliderBooking.module.css';
-
+import axios from 'axios';
 const BuilderBooking = () => {
   const [customBuilds, setCustomBuilds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,6 +8,14 @@ const BuilderBooking = () => {
   const [statusUpdate, setStatusUpdate] = useState('');
 
   useEffect(() => {
+    fetchGPU();
+    fetchRAM();
+    fetchStorage();
+    fetchSMPS();
+    fetchCase();
+    fetchCooler();
+    fetchMotherboard();
+    fetchCPU();
     // Get builder ID from session storage
     const builderId = sessionStorage.getItem('pid');
     if (builderId) {
@@ -82,6 +90,66 @@ const BuilderBooking = () => {
     }
   };
 
+
+    const [cpuarray, setcpuarray] = useState([]);
+    const [Graphiccardarray, setGraphiccardarray] = useState([]);
+    const [RAMarray, setRAMarray] = useState([]);
+    const [Storagearray, setStoragearray] = useState([]);
+    const [SMPSarray, setSMPSarray] = useState([]);
+    const [Casearray, setCasearray] = useState([]);
+    const [Coolerarray, setCoolerarray] = useState([]);
+    const [Motherboardarray, setMotherboardarray] = useState([]);
+
+  const fetchCPU = () => {
+          axios.get("http://localhost:5000/collectionCpuById/")
+              .then((response) => setcpuarray(response.data.cpu))
+              .catch((err) => console.log(err));
+      };
+      const fetchGPU = () => {
+          axios.get("http://localhost:5000/collectionGraphiccardById")
+              .then((response) => setGraphiccardarray(response.data.graphiccard))
+              .catch((err) => console.log(err));
+      };
+  
+      const fetchRAM = () => {
+          axios.get("http://localhost:5000/collectionRamById/")
+              .then((response) => setRAMarray(response.data.ram))
+              .catch((err) => console.log(err));
+      };
+  
+      const fetchStorage = () => {
+          axios.get("http://localhost:5000/collectionStorageById/")
+              .then((response) => setStoragearray(response.data.storage))
+              .catch((err) => console.log(err));
+      };
+  
+      const fetchSMPS = () => {
+          axios.get("http://localhost:5000/collectionSmpsById/")
+              .then((response) => setSMPSarray(response.data.smps))
+              .catch((err) => console.log(err));
+      };
+  
+      const fetchCase = () => {
+          axios.get("http://localhost:5000/collectionCaseById/")
+              .then((response) => setCasearray(response.data.cases))
+              .catch((err) => console.log(err));
+      };
+  
+      const fetchCooler = () => {
+          axios.get("http://localhost:5000/collectionCoolerById/")
+              .then((response) => setCoolerarray(response.data.cooler))
+              .catch((err) => console.log(err));
+      };
+  
+      const fetchMotherboard = () => {
+        axios.get(`http://localhost:5000/collectionMotherboardById/`)
+            .then((response) => setMotherboardarray(response.data.motherboard))
+            .catch((err) => console.log(err));
+            console.log(Motherboardarray);
+            
+    };
+
+
   // Function to fetch component details from IDs
   const fetchComponentDetails = async (build) => {
     if (!build) return;
@@ -148,7 +216,7 @@ const BuilderBooking = () => {
                   <div className={styles.componentsList}>
                     <div className={styles.component}>
                       <span className={styles.componentLabel}>Motherboard ID:</span>
-                      <span className={styles.componentValue}>{selectedBuild.motherboardId}</span>
+                      <span className={styles.componentValue}>{Motherboardarray.motherboardName}</span>
                     </div>
                     <div className={styles.component}>
                       <span className={styles.componentLabel}>Storage ID:</span>

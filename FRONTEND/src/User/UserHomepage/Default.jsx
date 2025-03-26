@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 // Import your PC part images
-// You'll need to create or source these images
 const pcPartImages = [
   "/img/gpu.png",
   "/img/cpu.png",
@@ -15,16 +14,17 @@ const pcPartImages = [
 const Default = () => {
   // Ref for animated elements
   const mainRef = useRef(null);
-  
+  const sectionRefs = useRef([]);
+
   // Add parallax effect on mouse move
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (!mainRef.current) return;
-      
+
       const { clientX, clientY } = e;
       const xPos = (clientX / window.innerWidth - 0.5) * 20;
       const yPos = (clientY / window.innerHeight - 0.5) * 20;
-      
+
       // Apply subtle parallax to floating parts
       const parts = document.querySelectorAll(`.${Styles.pcPart}`);
       parts.forEach((part, index) => {
@@ -32,31 +32,53 @@ const Default = () => {
         part.style.transform = `translate(${xPos * speed}px, ${yPos * speed}px)`;
       });
     };
-    
+
+    // Intersection Observer for section animations
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(Styles.sectionVisible);
+        }
+      });
+    }, observerOptions);
+
+    sectionRefs.current.forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      sectionRefs.current.forEach(ref => {
+        if (ref) observer.unobserve(ref);
+      });
     };
   }, []);
 
   return (
-    <div>
+    <div className={Styles.Body}>
       <div className={Styles.Main} ref={mainRef}>
         {/* Floating PC Parts Background */}
         <div className={Styles.pcParts}>
           {pcPartImages.map((img, index) => (
-            <img 
-              key={index} 
-              src={img} 
-              alt={`PC Part ${index + 1}`} 
-              className={Styles.pcPart} 
+            <img
+              key={index}
+              src={img}
+              alt={`PC Part ${index + 1}`}
+              className={Styles.pcPart}
             />
           ))}
         </div>
-                
+
         <div className={Styles.Mainbody}>
           <h1 className={Styles.h1}>Let's Build PC Easily Online.</h1>
-          
+
           <div className={Styles["button-wrapper"]}>
             <Link to="/User/EasyToBulid">
               <Button
@@ -104,9 +126,9 @@ const Default = () => {
               </Button>
             </Link>
           </div>
-          
+
           <p className={Styles.p}>Easy To Build makes customizing a PC simple and hassle-free.</p>
-          
+
           <div className={Styles["button-wrapper"]}>
             <Link to="/User/PcBuliderSelect">
               <Button
@@ -157,10 +179,118 @@ const Default = () => {
               </Button>
             </Link>
           </div>
-          
+
           <p className={Styles.p}>The advanced level helps to make more specific choices and offers a slightly more complex experience.</p>
         </div>
       </div>
+
+      {/* New Performance Section */}
+      <div
+        ref={el => sectionRefs.current[0] = el}
+        className={`${Styles.performanceSection} ${Styles.sectionHidden}`}
+      >
+        <div className={Styles.sectionContent}>
+          <h2>Unleash Maximum Performance</h2>
+          <div className={Styles.performanceGrid}>
+            <div className={Styles.performanceItem}>
+              <img src="/img/cpu-icon.png" alt="CPU Performance" />
+              <h3>Powerful Processors</h3>
+              <p>Choose from the latest CPUs to maximize your computing power</p>
+            </div>
+            <div className={Styles.performanceItem}>
+              <img src="/img/gpu-icon.png" alt="GPU Performance" />
+              <h3>Graphics Powerhouse</h3>
+              <p>Select top-tier GPUs for gaming and creative work</p>
+            </div>
+            <div className={Styles.performanceItem}>
+              <img src="/img/ram-icon.png" alt="RAM Performance" />
+              <h3>High-Speed Memory</h3>
+              <p>Optimize your system with lightning-fast RAM configurations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Customization Section */}
+      <div
+        ref={el => sectionRefs.current[1] = el}
+        className={`${Styles.customizationSection} ${Styles.sectionHidden}`}
+      >
+        <div className={Styles.sectionContent}>
+          <h2>Infinite Customization Possibilities</h2>
+          <div className={Styles.customizationSlider}>
+            <div className={Styles.customizationItem}>
+              <img src="/img/rgb-lighting.png" alt="RGB Lighting" />
+              <h3>RGB Lighting</h3>
+            </div>
+            <div className={Styles.customizationItem}>
+              <img src="/img/case-design.png" alt="Case Designs" />
+              <h3>Unique Case Designs</h3>
+            </div>
+            <div className={Styles.customizationItem}>
+              <img src="/img/cooling-system.png" alt="Cooling Solutions" />
+              <h3>Advanced Cooling</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer className={Styles.Footer}>
+        <div className={Styles.FooterContent}>
+          <div className={Styles.FooterColumn}>
+            <h4>Quick Links</h4>
+            <ul>
+              <li><Link to="/User/EasyToBulid">Easy Build</Link></li>
+              <li><Link to="/User/PcBuliderSelect">Advanced Build</Link></li>
+              <li><Link to="/support">Support</Link></li>
+              <li><Link to="/faq">FAQ</Link></li>
+            </ul>
+          </div>
+
+          <div className={Styles.FooterColumn}>
+            <h4>Company</h4>
+            <ul>
+              <li><Link to="/about">About Us</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
+              <li><Link to="/terms">Terms of Service</Link></li>
+            </ul>
+          </div>
+
+          {/* <div className={Styles.FooterColumn}>
+            <h4>Connect With Us</h4>
+            <div className={Styles.SocialIcons}>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div> */}
+
+          <div className={Styles.FooterColumn}>
+            <h4>Newsletter</h4>
+            <form className={Styles.NewsletterForm}>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+              {/* <button type="submit">Subscribe</button> */}
+            </form>
+          </div>
+        </div>
+
+        <div className={Styles.FooterBottom}>
+          <p>&copy; 2025 CUSTOMCORE. All Rights Reserved.</p>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -19,7 +19,7 @@ const Navbar = () => {
     <div className={Style.Container}>
       <div className={Style.Wrapper}>
         <div >
-          <FormControl variant="standard">
+          {/* <FormControl variant="standard">
             <InputLabel htmlFor="standard-adornment-password">Search</InputLabel>
             <Input
              
@@ -45,12 +45,12 @@ const Navbar = () => {
               }
               label="Password"
             />
-          </FormControl>
+          </FormControl> */}
 
 
         </div>
         <div className={Style.Items}>
-          <div className={Style.Item}>
+          {/* <div className={Style.Item}>
             <LanguageIcon className={Style.Icon} />
             English
           </div>
@@ -67,7 +67,7 @@ const Navbar = () => {
           <div className={Style.Item}>
             <ChatBubbleOutlineIcon className={Style.Icon} />
             <div className={Style.counter}>2</div>
-          </div>
+          </div> */}
           <div className={Style.Item}>
             <FormatListBulletedIcon className={Style.Icon} />
           </div>

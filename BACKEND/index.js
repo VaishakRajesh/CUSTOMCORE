@@ -544,9 +544,9 @@ app.get("/collectionMotherboardById/:id", async (req, res) => {
         const id = req.params.id
         const motherboard = await Motherboard.findById(id)
         if (motherboard.length === 0) {
-            return res.status(404).json({ message: " Motherboard not found" })
+            return res.status(404).json({ message: " Motherboard not found", motherboard:[] })
         } else {
-            res.send(motherboard).status(200)
+            res.send({motherboard}).status(200)
         }
     } catch (err) {
         console.error("Error Finding Type:", err)

@@ -58,6 +58,8 @@ import PcBuliderSelect from "./User/PcBuliderSelect/PcBuliderSelect";
 import Editprofile from "./Admin/Pages/Editprofile/Editprofile";
 import ViewBuliderDetails from "./Admin/Pages/ViewBuliderDetails/ViewBuliderDetails";
 import BuilderBooking from "./Pc Buliders/BuliderBooking/BuliderBooking";
+import Feedback from "./Admin/Pages/Feedback/Feedback";
+import Complaint from "./Admin/Pages/Complaint/Complaint";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -222,6 +224,14 @@ export const router = createBrowserRouter([
             {
                 path: "Editprofile",
                 element: <Editprofile />
+            },
+            {
+                path: "Feedback",
+                element: <Feedback/>
+            },
+            {
+                path: "Complaint",
+                element: <Complaint />
             },
         ]
     },

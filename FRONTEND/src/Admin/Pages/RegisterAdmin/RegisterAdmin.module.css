@@ -16,28 +16,42 @@
     75% { transform: translateX(-5px); }
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 .Body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #ffffff, #ffffff);
+    background: linear-gradient(135deg, #f5f5f5, #ffffff);
+    transition: background 0.3s ease-in-out;
 }
 
 .container {
     background: white;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
     animation: fadeInSlideUp 0.8s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.containerHover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
     margin-bottom: 20px;
     color: #333;
     font-weight: bold;
+    transition: color 0.3s ease-in-out;
 }
 
 .form {
@@ -53,10 +67,24 @@ h2 {
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
+    transition: all 0.3s ease-in-out;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-input[type="file"] {
+.imageUploadHover {
+    background-color: rgba(106, 17, 203, 0.05);
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.1);
+}
+
+.fileInput {
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fileInput:hover {
+    opacity: 1;
 }
 
 .previewImg {
@@ -65,11 +93,17 @@ input[type="file"] {
     object-fit: cover;
     border-radius: 50%;
     border: 3px solid #6a11cb;
-    transition: transform 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .previewImg:hover {
     transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(106, 17, 203, 0.3);
+}
+
+.textFieldHover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 input, .MuiOutlinedInput-root {
@@ -77,7 +111,7 @@ input, .MuiOutlinedInput-root {
 }
 
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
-    border-color: #2575fc !important;
+    border-color: #6a11cb !important;
 }
 
 button {
@@ -88,19 +122,27 @@ button {
     border-radius: 8px;
 }
 
-button:hover {
+.buttonHover {
+    animation: pulse 0.5s ease-in-out;
     background: #6a11cb !important;
     transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(106, 17, 203, 0.3);
 }
 
 .error {
     color: red;
     font-weight: bold;
     animation: shake 0.5s ease-in-out;
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.05);
+    border-radius: 8px;
 }
 
 .success {
     color: green;
     font-weight: bold;
     animation: fadeInSlideUp 0.5s ease-in-out;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.05);
+    border-radius: 8px;
 }

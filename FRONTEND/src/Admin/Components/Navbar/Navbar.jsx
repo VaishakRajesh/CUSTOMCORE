@@ -79,12 +79,12 @@ const Navbar = () => {
                                     Add New Admin
                                 </Link>
                                 <Link 
-                                    to="/Admin/ChangePassword" 
+                                    to="/Admin/Editprofile" 
                                     className={Style.DropdownItem}
                                     onClick={() => setIsDropdownOpen(false)}
                                 >
                                     <LockResetIcon className={Style.DropdownIcon} />
-                                    Change Password
+                                    Edit Profile & Change Password
                                 </Link>
                                 <div 
                                     className={Style.DropdownItem} 

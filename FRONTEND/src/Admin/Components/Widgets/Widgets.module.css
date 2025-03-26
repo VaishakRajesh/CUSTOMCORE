@@ -1,46 +1,119 @@
-.Widgets{
-display: flex;
-justify-content: space-between;
-flex: 1;
-padding: 10px;
--webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-border-radius: 15px;
-height: 100px;
-}
-.Left, .Right{
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  .Widgets {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    margin: 10px;
+    max-width: 300px;
+  }
+  
+  .WidgetContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .Hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    animation: pulse 0.5s ease-in-out;
+  }
+  
+  .Left {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-}
-.Title{
+    gap: 10px;
+  }
+  
+  .Title {
     font-weight: bold;
-    font-size: 14px;
-    color: gray;
-}
-.Counter{
-    font-size: 28px;
-    font-weight: 300;
-}
-.Link{
-    width: max-content;
-    font-size: 12px;
-    border-bottom: 1.5px solid gray;
-}
-.Percentage{
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+  }
+  
+  .Counter {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .Link {
+    font-size: 0.8rem;
+    color: #000000;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .Link:hover {
+    color: #4a90e2;
+  }
+  
+  .Right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  
+  .Percentage {
     display: flex;
     align-items: center;
-    font-size: 14px;
-}
-.positive{
-   color: rgb(0, 218, 0);
-}
-.negtive{
- color: red;
-}
-.Icon{
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 7px;
-    align-self: flex-end;
-}
+    font-size: 0.9rem;
+  }
+  
+  .Positive {
+    color: #2ecc71;
+  }
+  
+  .Negative {
+    color: #e74c3c;
+  }
+  
+  .TrendIndicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .IconContainer {
+    background-color: rgba(74, 144, 226, 0.1);
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .IconContainer:hover {
+    background-color: rgba(74, 144, 226, 0.2);
+  }
+  
+  .Icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  .IconContainer:hover .Icon {
+    transform: scale(1.2);
+  }

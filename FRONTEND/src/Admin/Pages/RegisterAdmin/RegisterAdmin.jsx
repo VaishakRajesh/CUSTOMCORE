@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import Style from './RegisterAdmin.module.css';
-import { 
-  Button, 
-  TextField
-} from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import axios from 'axios';
 
 const RegisterAdmin = () => {
@@ -17,6 +14,14 @@ const RegisterAdmin = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [isHovered, setIsHovered] = useState({
+    container: false,
+    imageUpload: false,
+    name: false,
+    email: false,
+    password: false,
+    button: false
+  });
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -60,7 +65,6 @@ const RegisterAdmin = () => {
         image: null
       });
       setPreviewImage(null);
-
     } catch (error) {
       setError('Failed to register admin. Please try again.');
       setSuccess(null);
@@ -69,72 +73,97 @@ const RegisterAdmin = () => {
   };
 
   return (
-    <div className={Style.Body}>
-      <div className={Style.container}>
+    <div 
+      className={Style.Body}
+      onMouseEnter={() => setIsHovered(prev => ({ ...prev, container: true }))}
+      onMouseLeave={() => setIsHovered(prev => ({ ...prev, container: false }))}
+    >
+      <div className={`${Style.container} ${isHovered.container ? Style.containerHover : ''}`}>
         <h2>Register New Admin</h2>
-        
+
         <form onSubmit={handleSubmit} className={Style.form}>
-          <div className={Style.imageUpload}>
+          <div 
+            className={`${Style.imageUpload} ${isHovered.imageUpload ? Style.imageUploadHover : ''}`}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, imageUpload: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, imageUpload: false }))}
+          >
             {previewImage ? (
-              <img src={previewImage} alt="Preview" className={Style.previewImg} />
+              <img 
+                src={previewImage} 
+                alt="Preview" 
+                className={Style.previewImg} 
+              />
             ) : (
               <p>No Image Selected</p>
             )}
-            <input 
-              type="file" 
-              accept="image/*" 
+            <input
+              type="file"
+              accept="image/*"
               name="image"
-              onChange={handleChange} 
+              onChange={handleChange}
+              className={Style.fileInput}
             />
           </div>
 
-          <TextField 
+          <TextField
             name="Name"
-            label="Name" 
-            variant="outlined" 
-            fullWidth 
+            label="Name"
+            variant="outlined"
+            fullWidth
             value={adminData.Name}
             onChange={handleChange}
-            required 
+            required
             margin="normal"
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, name: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, name: false }))}
+            className={isHovered.name ? Style.textFieldHover : ''}
           />
 
-          <TextField 
+          <TextField
             name="Email"
-            label="Email" 
+            label="Email"
             type="email"
-            variant="outlined" 
-            fullWidth 
+            variant="outlined"
+            fullWidth
             value={adminData.Email}
             onChange={handleChange}
-            required 
+            required
             margin="normal"
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, email: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, email: false }))}
+            className={isHovered.email ? Style.textFieldHover : ''}
           />
 
-          <TextField 
+          <TextField
             name="Password"
-            label="Password" 
+            label="Password"
             type="password"
-            variant="outlined" 
-            fullWidth 
+            variant="outlined"
+            fullWidth
             value={adminData.Password}
             onChange={handleChange}
-            required 
+            required
             margin="normal"
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, password: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, password: false }))}
+            className={isHovered.password ? Style.textFieldHover : ''}
           />
 
-          <Button 
-            type="submit" 
-            variant="contained" 
-            color="primary" 
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
             fullWidth
             style={{ marginTop: '15px' }}
+            onMouseEnter={() => setIsHovered(prev => ({ ...prev, button: true }))}
+            onMouseLeave={() => setIsHovered(prev => ({ ...prev, button: false }))}
+            className={isHovered.button ? Style.buttonHover : ''}
           >
             Register
           </Button>
 
-          {error && <p style={{color: 'red', marginTop: '10px'}}>{error}</p>}
-          {success && <p style={{color: 'green', marginTop: '10px'}}>{success}</p>}
+          {error && <p className={Style.error}>{error}</p>}
+          {success && <p className={Style.success}>{success}</p>}
         </form>
       </div>
     </div>

@@ -1,22 +1,122 @@
-.body{
-    background-color: #d6dbeb;
-    height: 100vh;
-    width: 100%;
-    background-image: url('./feedback.gif');
-    background-position:right;
-    background-position-x: 87%;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-}
-.Card{
-background-color: white;
-height: 400px;
-width: 400px;
-border-radius: 40px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-around;
-margin-left: 400px;
+@keyframes cardEntry {     
+    from {         
+        opacity: 0;         
+        transform: scale(0.8) translateX(-100px);     
+    }     
+    to {         
+        opacity: 1;         
+        transform: scale(1) translateX(0);     
+    } 
+}  
+
+@keyframes buttonHover {     
+    0% {         
+        transform: scale(1);     
+    }     
+    50% {         
+        transform: scale(1.05);     
+    }     
+    100% {         
+        transform: scale(1);     
+    } 
+}  
+
+@keyframes bgAnimation {     
+    0% {         
+        background-position: 87% center;     
+    }     
+    50% {         
+        background-position: 90% center;     
+    }     
+    100% {         
+        background-position: 87% center;     
+    } 
+}  
+
+.body {     
+    background-color: #d6dbeb;     
+    height: 100vh;     
+    width: 100%;     
+    background-image: url('./feedback.gif');     
+    background-position: right;     
+    background-position-x: 87%;     
+    background-repeat: no-repeat;     
+    display: flex;     
+    align-items: center;     
+    animation: bgAnimation 10s infinite alternate;     
+    transition: background-position 0.5s ease; 
+}  
+
+.Card {     
+    background-color: white;     
+    height: 450px;     
+    width: 450px;     
+    border-radius: 40px;     
+    display: flex;     
+    flex-direction: column;     
+    align-items: center;     
+    justify-content: space-around;     
+    margin-left: 400px;     
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);     
+    border: 2px solid rgba(255, 255, 255, 0.5);     
+    animation: cardEntry 1s ease-out;     
+    padding: 20px;     
+    transition: all 0.3s ease; 
+}  
+
+.Card:hover {     
+    transform: translateY(-10px);     
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15); 
+}  
+
+.TextField {     
+    width: 100%;     
+    margin-bottom: 20px; 
+}  
+
+.Rating {     
+    display: flex;     
+    align-items: center;     
+    justify-content: center;     
+    margin-bottom: 20px; 
+}  
+
+.button {     
+    width: 100%;     
+    display: flex;     
+    justify-content: center; 
+}  
+
+.submitButton {     
+    background-color: #000;  /* Keeping the original black color */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden; 
+}  
+
+.submitButton::before {     
+    content: '';     
+    position: absolute;     
+    top: 0;     
+    left: -100%;     
+    width: 100%;     
+    height: 100%;     
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);     
+    transition: all 0.5s ease; 
+}  
+
+.submitButton:hover::before {     
+    left: 100%; 
+}  
+
+.submitButton:hover {     
+    animation: buttonHover 0.5s;     
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
 }

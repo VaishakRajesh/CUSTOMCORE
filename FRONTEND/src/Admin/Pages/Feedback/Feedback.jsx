@@ -17,8 +17,10 @@ const AdminFeedback = () => {
 
   const fetchFeedback = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/feedback');
+      const response = await axios.get('http://localhost:5000/collectionFeedBack');
       setFeedbackArray(response.data.feedback);
+      console.log(feedbackArray);
+      
     } catch (error) {
       console.error('Error fetching feedback:', error);
     }
@@ -26,7 +28,7 @@ const AdminFeedback = () => {
 
   const deleteFeedback = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/feedback/${id}`);
+      await axios.delete(`http://localhost:5000/collectionFeedBack/${id}`);
       fetchFeedback();
     } catch (error) {
       console.error('Error deleting feedback:', error);
@@ -100,7 +102,7 @@ const AdminFeedback = () => {
                       textAlign: 'center'
                     }}
                   >
-                    {feedback.message}
+                    {feedback.FeedbackRecation}
                   </Typography>
                   
                   <Typography 

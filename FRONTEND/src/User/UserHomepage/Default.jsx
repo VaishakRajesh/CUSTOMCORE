@@ -275,15 +275,9 @@ const Default = () => {
           </div> */}
 
           <div className={Styles.FooterColumn}>
-            <h4>Newsletter</h4>
-            <form className={Styles.NewsletterForm}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                required
-              />
+            <h4>FeedBack </h4>
+            <li><Link to="/User/Feedback">FeedBack</Link></li>
               {/* <button type="submit">Subscribe</button> */}
-            </form>
           </div>
         </div>
 

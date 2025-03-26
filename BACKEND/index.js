@@ -1625,11 +1625,11 @@ const CollectionFeedBackStructure = new mongoose.Schema({
         ref: "CollectionUser",
         required: true
     },
-    pcbuliddevId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CollectionPcbuliddev",
-        required: true
-    },
+    // pcbuliddevId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "CollectionPcbuliddev",
+    //     required: true
+    // },
 
 })
 
@@ -1638,12 +1638,12 @@ const Feedback = mongoose.model("CollectionFeedBack", CollectionFeedBackStructur
 //feedback Post
 app.post("/collectionFeedBack", async (req, res) => {
     try {
-        const { FeedbackRecation, FeedbackContent, userId, pcbuliddevId } = req.body
+        const { FeedbackRecation, FeedbackContent, userId } = req.body
         let feedback = new Feedback({
             FeedbackRecation,
             FeedbackContent,
             userId,
-            pcbuliddevId
+            
         })
         await feedback.save();
         res.json({ message: " FeedBack Inserted Successfully " })
@@ -1658,9 +1658,9 @@ app.get("/collectionFeedBack", async (req, res) => {
     try {
         const feedback = await Feedback.find()
         if (feedback.length === 0) {
-            return res.status(404).json({ message: " FeedBack Not Found " })
+            return res.status(404).json({ message: " FeedBack Not Found " , feedback:[]})
         } else {
-            res.send(feedback).status(200)
+            res.send({feedback}).status(200)
         }
     } catch (err) {
         console.error(" Error Finding FeedBack ", err)
@@ -1675,9 +1675,9 @@ app.get("/collectionFeedBackById/:id", async (req, res) => {
         const id = req.params.id
         const feedback = await Feedback.findById(id)
         if (feedback.length === 0) {
-            return res.status(404).json({ message: " Feedback not Found" })
+            return res.status(404).json({ message: " Feedback not Found", feedback:[] })
         } else {
-            res.send(feedback).status(200)
+            res.send({feedback}).status(200)
         }
     } catch (err) {
         console.error(" Error Finding Feedback", err)
@@ -1705,7 +1705,7 @@ app.delete("/collectionFeedBack/:id", async (req, res) => {
 app.put("/collectionFeedback/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        const { FeedbackRecation, FeedbackContent, userId, pcbuliddevId } = req.body;
+        const { FeedbackRecation, FeedbackContent, userId } = req.body;
         const updatedFeedback = await Feedback.findByIdAndUpdate(
             id,
             { FeedbackRecation, FeedbackContent, userId, pcbuliddevId },
@@ -1723,10 +1723,10 @@ app.put("/collectionFeedback/:id", async (req, res) => {
 app.patch("/collectionFeedback/:id", async (req, res) => {
     const id = req.params.id
     try {
-        const { FeedbackRecation, FeedbackContent, userId, pcbuliddevId } = req.body;
+        const { FeedbackRecation, FeedbackContent, userId } = req.body;
         const updatedFeedback = await Feedback.findByIdAndUpdate(
             id,
-            { FeedbackRecation, FeedbackContent, userId, pcbuliddevId },
+            { FeedbackRecation, FeedbackContent, userId },
             { new: true }
         );
         res.json(updatedFeedback)

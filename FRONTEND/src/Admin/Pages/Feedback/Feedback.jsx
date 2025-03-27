@@ -1,28 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import { 
   Typography, 
-  Box, 
   Card, 
   CardContent, 
   IconButton,
-  Chip
+  CircularProgress
 } from '@mui/material';
-import { DeleteOutline, MessageOutlined } from '@mui/icons-material';
+import { DeleteOutline, AccountCircle, EmailOutlined } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import styles from './Feedback.module.css';
 
 const AdminFeedback = () => {
   const [feedbackArray, setFeedbackArray] = useState([]);
+  const [userDetails, setUserDetails] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  const fetchUserDetails = async (userId) => {
+    try {
+      // If user details already fetched, return them
+      if (userDetails[userId]) return userDetails[userId];
+      
+      // Fetch user details
+      const response = await axios.get(`http://localhost:5000/collectionUserById/${userId}`);
+      
+      // Update user details state
+      const updatedUserDetails = {
+        ...userDetails,
+        [userId]: response.data.user
+      };
+      setUserDetails(updatedUserDetails);
+      
+      return response.data.user;
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      return null;
+    }
+  };
 
   const fetchFeedback = async () => {
     try {
+      setLoading(true);
       const response = await axios.get('http://localhost:5000/collectionFeedBack');
-      setFeedbackArray(response.data.feedback);
-      console.log(feedbackArray);
       
+      // Fetch user details for each feedback item
+      const feedbackWithUserDetails = await Promise.all(
+        response.data.feedback.map(async (feedback) => {
+          const userDetail = await fetchUserDetails(feedback.userId);
+          return {
+            ...feedback,
+            userDetail
+          };
+        })
+      );
+
+      setFeedbackArray(feedbackWithUserDetails);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching feedback:', error);
+      setLoading(false);
     }
   };
 
@@ -37,7 +73,21 @@ const AdminFeedback = () => {
 
   useEffect(() => {
     fetchFeedback();
+    fetchUserDetails();
   }, []);
+
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh' 
+      }}>
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.feedbackContainer}>
@@ -80,17 +130,47 @@ const AdminFeedback = () => {
               >
                 <CardContent className={styles.cardContent}>
                   <div className={styles.cardHeader}>
-                    <Typography variant="h6" sx={{ color: '#4CAF50', mb: 1 }}>
-                      {feedback.name}
-                    </Typography>
-                    <Chip 
-                      icon={<MessageOutlined />} 
-                      label={new Date(feedback.createdAt).toLocaleDateString()} 
-                      sx={{ 
-                        backgroundColor: '#333', 
-                        color: 'Black' 
-                      }} 
-                    />
+                    {feedback.userDetail ? (
+                      <>
+                        <Typography 
+                          variant="h6" 
+                          sx={{ 
+                            color: '#4CAF50', 
+                            mb: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <AccountCircle sx={{ mr: 1 }} /> 
+                          {feedback.userDetail.name || 'Unknown Name'}
+                        </Typography>
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            color: '#757575',
+                            mb: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <EmailOutlined sx={{ mr: 1 }} /> 
+                          {feedback.userDetail.email || 'Unknown Email'}
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          color: '#FF4444',
+                          mb: 2,
+                          textAlign: 'center'
+                        }}
+                      >
+                        User details not available
+                      </Typography>
+                    )}
                   </div>
                   
                   <Typography 
@@ -102,17 +182,18 @@ const AdminFeedback = () => {
                       textAlign: 'center'
                     }}
                   >
-                    {feedback.FeedbackRecation}
+                    Feedback Reaction: {feedback.FeedbackRecation}
                   </Typography>
                   
                   <Typography 
                     variant="body2" 
                     sx={{ 
                       color: '#757575',
+                      mb: 2,
                       textAlign: 'center'
                     }}
                   >
-                    {feedback.email}
+                    Feedback Content: {feedback.FeedbackContent}
                   </Typography>
                   
                   <div className={styles.cardActions}>

@@ -2076,7 +2076,7 @@ const CollectionCustomStructure = new mongoose.Schema({
     },
     graphiccardId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "CollectionGraphicCard",
+        ref: "CollectionGraphiccard",
         required: true
     },
     coolerId: {
@@ -2086,7 +2086,7 @@ const CollectionCustomStructure = new mongoose.Schema({
     },
     CaseId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "CollectionCases",
+        ref: "CollectionCase",
         required: true
     },
     userId: {
@@ -2132,7 +2132,7 @@ app.post("/collectioncustom", async (req, res) => {
 //Custom select or find 
 app.get("/collectionCustom", async (req, res) => {
     try {
-        const custom = await Custom.find()
+        const custom = await Custom.find().populate("motherboardId").populate("storageId").populate("ramId").populate("graphiccardId").populate("coolerId").populate("CaseId").populate("userId").exec()
         if (custom.length === 0) {
             return res.status(404).json({ message: " Custom Not Found" })
         } else {
@@ -2166,7 +2166,22 @@ app.get("/collectionCustomById/:id", async (req, res) => {
 app.get("/collectionCustomByBuilder/:id", async (req, res) => {
     try {
         const builderId = req.params.id;
-        const customBuilds = await Custom.find({ pcBuliderId: builderId });
+        const customBuilds = await Custom.find({ pcBuliderId: builderId }).populate("motherboardId").populate("storageId").populate("ramId").populate("graphiccardId").populate("coolerId").populate("CaseId").populate("userId");
+        
+        if (customBuilds.length === 0) {
+            return res.status(404).json({ message: "No custom builds found for this builder" });
+        }
+        
+        res.status(200).json(customBuilds);
+    } catch (err) {
+        console.error("Error Finding Custom Builds:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+app.get("/collectionCustomByUser/:id", async (req, res) => {
+    try {
+        const UserId = req.params.id;
+        const customBuilds = await Custom.find({ userId: UserId }).populate("motherboardId").populate("storageId").populate("ramId").populate("graphiccardId").populate("coolerId").populate("CaseId").populate("userId");
         
         if (customBuilds.length === 0) {
             return res.status(404).json({ message: "No custom builds found for this builder" });
@@ -2255,7 +2270,7 @@ const CollectionPreBulidStructure = new mongoose.Schema({
     },
     graphiccardId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "CollectionGraphicCard",
+        ref: "CollectionGraphiccard",
         required: true
     },
     coolerId: {

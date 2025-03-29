@@ -59,6 +59,8 @@ const Advancelevel = () => {
     const handleComplete = () => {
         
         const data = {
+            cpuId:cpu,
+            smpsId:SMPS,
             motherboardId: Motherboard,
             storageId: storage,
             ramId: ram,

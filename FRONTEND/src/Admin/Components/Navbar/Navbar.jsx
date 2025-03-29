@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Style from './Navbar.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Make sure to import axios
 
 // Material-UI Icons
@@ -16,6 +16,20 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 const Navbar = () => {
+
+
+    const navigate = useNavigate()
+    const handleSignOut = () => {        
+        const confirmLogout = confirm("Are you sure you want to log out?");
+            if (confirmLogout) {
+          sessionStorage.removeItem('aid');
+          navigate('/Login');
+          console.log("logged out");
+        } else {
+          console.log("logout canceled");
+        }
+      };
+
     const [Admin, setAdmin] = useState(null);
   
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -29,10 +43,6 @@ const Navbar = () => {
         setIsProfileDropdownOpen(!isProfileDropdownOpen);
     };
 
-    const handleLogout = () => {
-        // Implement logout logic here
-        console.log('Logging out');
-    };
 
     useEffect(() => {
         const adminId = sessionStorage.getItem('aid');
@@ -88,7 +98,7 @@ const Navbar = () => {
                                 </Link>
                                 <div 
                                     className={Style.DropdownItem} 
-                                    onClick={handleLogout}
+                                    onClick={handleSignOut}
                                 >
                                     <ExitToAppIcon className={Style.DropdownIcon} />
                                     Logout

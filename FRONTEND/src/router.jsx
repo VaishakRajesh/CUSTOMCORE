@@ -62,6 +62,7 @@ import Feedback from "./Admin/Pages/Feedback/Feedback";
 import Complaint from "./Admin/Pages/Complaint/Complaint";
 import AddAdmin from "./Admin/Pages/RegisterAdmin/RegisterAdmin";
 import RegisterAdmin from "./Admin/Pages/RegisterAdmin/RegisterAdmin";
+import CustomPcStatus from "./User/CustomPcStatus/CustomPcStatus";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -284,6 +285,10 @@ export const router = createBrowserRouter([
             {
                 path: "PcBuliderSelect",
                 element: <PcBuliderSelect />
+            },
+            {
+                path: "CustomPcStatus",
+                element: <CustomPcStatus />
             },
         ]
     },

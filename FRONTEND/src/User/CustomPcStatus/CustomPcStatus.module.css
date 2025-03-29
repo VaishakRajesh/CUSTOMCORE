@@ -1,0 +1,98 @@
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #121212;
+}
+
+.statusBox {
+  background: #1e1e1e;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+.statusBox:hover {
+  transform: scale(1.05);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.progressBar {
+  background: #333;
+  border-radius: 10px;
+  height: 20px;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress {
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  height: 100%;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  line-height: 20px;
+  animation: progressAnim 2s ease-in-out;
+}
+
+.statusList {
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 1.1rem;
+  opacity: 0;
+  animation: fadeInUp 1s ease-in-out forwards;
+}
+
+.item:nth-child(1) { animation-delay: 0.2s; }
+.item:nth-child(2) { animation-delay: 0.4s; }
+.item:nth-child(3) { animation-delay: 0.6s; }
+.item:nth-child(4) { animation-delay: 0.8s; }
+.item:nth-child(5) { animation-delay: 1s; }
+.item:nth-child(6) { animation-delay: 1.2s; }
+
+.check {
+  color: #4caf50;
+  font-size: 1.3em;
+}
+
+.cross {
+  color: #e74c3c;
+  font-size: 1.3em;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progressAnim {
+  from { width: 0; }
+  to { width: 70%; }
+}

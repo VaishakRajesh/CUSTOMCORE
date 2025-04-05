@@ -1,11 +1,33 @@
-import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, TextField, MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import Style from './UserEditProfile.module.css';
-
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 const UserEditProfile = () => {
+  const fetchDistrict = () => {
+    axios.get("http://localhost:5000/collectionDistrict").then((response) => {
+      console.log(response.data);
+      setDistrictArray(response.data.district)
+    })
+  }
+  const fetchPlace = (e) => {
+    const district = e.target.value
+    axios.get(`http://localhost:5000/collectionPlaceByIdAll/${district}`).then((response) => {
+      console.log(response.data);
+      setPlaceArray(response.data)
+    })
+  }
+
+
+  const userId = sessionStorage.getItem('uid');
+  console.log('User ID from session storage:', userId);
+
+
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,40 +38,72 @@ const UserEditProfile = () => {
     photo: null,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  // };
+
+  // const handlePhotoUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setFormData({
+  //       ...formData,
+  //       photo: URL.createObjectURL(file),
+  //     });
+  //   }
+  // };
+
+
+
+  const [DistrictArray, setDistrictArray] = useState([])
+  const [PlaceArray, setPlaceArray] = useState([])
+
+  const [UserName, setUserName] = useState("")
+  const [UserContact, setUserContact] = useState("")
+  const [UserEmail, setUserEmail] = useState("")
+  const [UserAddress, setUserAddress] = useState("")
+  const [Place, setPlace] = useState("")
+
+  const handleChange = (event) => {
+    setPlace(event.target.value);
   };
 
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData({
-        ...formData,
-        photo: URL.createObjectURL(file),
-      });
+  const handleSubmit = async () => {
+    const Data = {
+      userName: UserName,
+      userEmail: UserEmail,
+      userAddress: UserAddress,
+      userContact: UserContact,
+      placeId : Place
+    };
+    try {
+      const response = await axios.put(`http://localhost:5000/collectionUserEdit/${userId}`, Data);
+      console.log(response);
+      toast.success('Updated successfully!');
+
+    } catch (err) {
+      console.log(err);
+      console.log('Failed to update status. Please try again.');
+      alert("Oops! Something went wrong. Please try again.");
     }
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data Submitted:', formData);
-  };
-
+  useEffect(() => {
+    fetchDistrict();
+  }, [])
   return (
     <div className={Style.container}>
       <div className={Style.card}>
         <h2 className={Style.title}>Edit Profile</h2>
-        <form onSubmit={handleSubmit} className={Style.form}>
+        <form className={Style.form}>
           {/* Profile Image Upload */}
           <div className={Style.profileImg}>
             <input
               type="file"
               accept="image/*"
-              onChange={handlePhotoUpload}
+              // onChange={handlePhotoUpload}
               style={{ display: 'none' }}
               id="photo-upload"
             />
@@ -71,8 +125,7 @@ const UserEditProfile = () => {
             <TextField
               name="name"
               label="Name"
-              value={formData.name}
-              onChange={handleChange}
+              // value={setUserName}
               variant="outlined"
               fullWidth
               sx={{
@@ -83,15 +136,14 @@ const UserEditProfile = () => {
                   '&:hover fieldset': { borderColor: '#4b5e91' },
                   '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
-              }}
+              }} onChange={(e) => setUserName(e.target.value)}
             />
           </div>
           <div className={Style.inputField}>
             <TextField
               name="email"
               label="Email"
-              value={formData.email}
-              onChange={handleChange}
+              // value={formData.email}
               variant="outlined"
               fullWidth
               sx={{
@@ -102,15 +154,15 @@ const UserEditProfile = () => {
                   '&:hover fieldset': { borderColor: '#4b5e91' },
                   '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
-              }}
+              }} onChange={(e) => setUserEmail(e.target.value)}
             />
           </div>
           <div className={Style.inputField}>
             <TextField
               name="address"
               label="Address"
-              value={formData.address}
-              onChange={handleChange}
+              // value={formData.address}
+              // onChange={handleChange}
               multiline
               rows={4}
               variant="outlined"
@@ -123,15 +175,15 @@ const UserEditProfile = () => {
                   '&:hover fieldset': { borderColor: '#4b5e91' },
                   '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
-              }}
+              }} onChange={(e) => setUserAddress(e.target.value)}
             />
           </div>
           <div className={Style.inputField}>
             <TextField
               name="contact"
               label="Contact"
-              value={formData.contact}
-              onChange={handleChange}
+              // value={formData.contact}
+              // onChange={handleChange}
               variant="outlined"
               fullWidth
               sx={{
@@ -142,7 +194,7 @@ const UserEditProfile = () => {
                   '&:hover fieldset': { borderColor: '#4b5e91' },
                   '&.Mui-focused fieldset': { borderColor: '#5b76b8' },
                 },
-              }}
+              }} onChange={(e) => setUserContact(e.target.value)}
             />
           </div>
 
@@ -152,8 +204,8 @@ const UserEditProfile = () => {
               <FormControl fullWidth>
                 <NativeSelect
                   name="district"
-                  value={formData.district}
-                  onChange={handleChange}
+                  // value={formData.district}
+                  onChange={fetchPlace}
                   inputProps={{ name: 'district', id: 'district' }}
                   sx={{
                     color: '#e2e8f0',
@@ -162,10 +214,11 @@ const UserEditProfile = () => {
                     '& option:checked': { backgroundColor: '#5b76b8', color: '#fff' }, // Highlight selected
                   }}
                 >
-                  <option value="" disabled>Select District</option>
-                  <option value="district1">District 1</option>
-                  <option value="district2">District 2</option>
-                  <option value="district3">District 3</option>
+                  {DistrictArray && DistrictArray.map((District, index) => (
+                    <option key={index} value={District._id} style={{ color: 'black' }}>
+                      {District.districtName}
+                    </option>
+                  ))}
                 </NativeSelect>
               </FormControl>
             </Box>
@@ -177,7 +230,7 @@ const UserEditProfile = () => {
               <FormControl fullWidth>
                 <NativeSelect
                   name="place"
-                  value={formData.place}
+                  value={Place}
                   onChange={handleChange}
                   inputProps={{ name: 'place', id: 'place' }}
                   sx={{
@@ -187,10 +240,12 @@ const UserEditProfile = () => {
                     '& option:checked': { backgroundColor: '#5b76b8', color: '#fff' }, // Highlight selected
                   }}
                 >
-                  <option value="" disabled>Select Place</option>
-                  <option value="place1">Place 1</option>
-                  <option value="place2">Place 2</option>
-                  <option value="place3">Place 3</option>
+                  {PlaceArray?.map((Place, index) => (
+                    <option key={index} value={Place._id} style={{ color: 'black' }}>
+                      {Place.placeName}
+                    </option>
+                  ))}
+
                 </NativeSelect>
               </FormControl>
             </Box>
@@ -199,6 +254,7 @@ const UserEditProfile = () => {
           {/* Save Button */}
           <div className={Style.buttonContainer}>
             <Button
+              onClick={handleSubmit}
               type="submit"
               variant="contained"
               sx={{

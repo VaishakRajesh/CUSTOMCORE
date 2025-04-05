@@ -1941,7 +1941,7 @@ app.get("/collectionUser", async (req, res) => {
 app.get("/collectionUserById/:id", async (req, res) => {
     try {
         const id = req.params.id
-        const user = await User.findById(id)
+        const user = await User.findById(id).populate("placeId");
         if (user.length === 0) {
             return res.status(404).json({ message: " user not Found" ,user: []})
         } else {
@@ -1970,7 +1970,7 @@ app.delete("/collectionUser/:id", async (req, res) => {
 })
 
 //UserPut
-app.put("/collectionUser/:id", async (req, res) => {
+app.put("/collectionUserEdit/:id", async (req, res) => {
     const id = req.params.id;
     try {
         const { userName, userEmail, userAddress, userPhoto, userProof, userContact, placeId, userPassword } = req.body;

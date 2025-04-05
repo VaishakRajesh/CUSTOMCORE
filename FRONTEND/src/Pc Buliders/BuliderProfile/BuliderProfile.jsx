@@ -78,7 +78,7 @@ const BuilderProfile = () => {
           <div className={Style.text}>Address: {builderData?.pcBuliderAddress || 'N/A'}</div>
           
           <div className={Style.Button}>
-            <Link to="/PcBuilder/BuilderEditProfile">
+            <Link to="/PcBulider/BuliderEditProfile">
               <Button 
                 variant="outlined" 
                 sx={{ 
@@ -97,7 +97,7 @@ const BuilderProfile = () => {
               </Button>
             </Link>
             
-            <Link to="/PcBuilder/BuilderChangePassword">
+            <Link to="/PcBulider/BuliderChangePassword">
               <Button 
                 variant="outlined" 
                 sx={{ 

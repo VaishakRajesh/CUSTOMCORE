@@ -116,9 +116,12 @@ const Login = () => {
         <div className={Styles.button}>
         <Button variant="outlined" sx={{ color: '#5e848b', borderColor: '#5e848b'}} onClick={handleSubmit}>LOGIN</Button>
         </div>
-        <div className={Styles.reg}>
+        <div className={Styles.button}>
         <Link to="/SeleReg"><Button variant="outlined" sx={{ color: '#5e848b', borderColor: '#5e848b'}}>REGISTRATION</Button></Link>
         </div>
+        {/* <div className={Styles.reg}>
+        <Link to="/"><Button variant="outlined" sx={{ color: '#5e848b', borderColor: '#5e848b'}}>FogotPassword</Button></Link>
+        </div> */}
         </Box>
       </div>
     </div>

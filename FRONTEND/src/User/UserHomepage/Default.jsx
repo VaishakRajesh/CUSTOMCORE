@@ -255,31 +255,30 @@ const Default = () => {
               <li><Link to="/terms">Terms of Service</Link></li>
             </ul>
           </div>
-
-          {/* <div className={Styles.FooterColumn}>
+{/* 
+          <div className={Styles.FooterColumn}>
             <h4>Connect With Us</h4>
             <div className={Styles.SocialIcons}>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin-in"></i></a>
             </div>
           </div> */}
 
           <div className={Styles.FooterColumn}>
-            <h4>FeedBack </h4>
-            <li><Link to="/User/Feedback">FeedBack</Link></li>
-              {/* <button type="submit">Subscribe</button> */}
+            <h4>Feedback</h4>
+            <ul>
+              <li><Link to="/User/Feedback">Give Feedback</Link></li>
+            </ul>
+            {/* <form className={Styles.NewsletterForm}>
+              <input type="email" placeholder="Subscribe with email" />
+              <button type="submit">Join</button>
+            </form> */}
           </div>
         </div>
+
+        <div className={Styles.FooterGlow}></div>
 
         <div className={Styles.FooterBottom}>
           <p>&copy; 2025 CUSTOMCORE. All Rights Reserved.</p>

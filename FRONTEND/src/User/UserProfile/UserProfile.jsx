@@ -15,14 +15,14 @@ const UserProfile = () => {
     const fetchUserData = async () => {
       try {
         const userResponse = await axios.get(`http://localhost:5000/collectionUserById/${userId}`);
-        console.log('User data:', userResponse.data.user);
+        console.log(userResponse.data.user);
         setUser(userResponse.data.user);
 
-        // Fetch place name using placeId
-        const placeId = userResponse.data.user.placeId;
-        const placeResponse = await axios.get(`http://localhost:5000/collectionPlaceById/${placeId}`);
-        setPlaceName(placeResponse.data.place); // Assuming the API returns the place name in the 'name' field
-        console.log(placeName.placeName)
+        // // Fetch place name using placeId
+        // const placeId = userResponse.data.user.placeId;
+        // const placeResponse = await axios.get(`http://localhost:5000/collectionPlaceById/${placeId}`);
+        // setPlaceName(placeResponse.data.place); // Assuming the API returns the place name in the 'name' field
+        // console.log(placeName.placeName)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -53,7 +53,7 @@ const UserProfile = () => {
         <div className={Style.text}>Contact: {user.userContact}</div>
         <div className={Style.text}>Email: {user.userEmail}</div>
         <div className={Style.text}>Address: {user.userAddress}</div>
-        <div className={Style.text}>Place: {placeName}</div> {/* Use placeName */}
+        <div className={Style.text}>Place: {user.placeId.placeName}</div> {/* Use placeName */}
         <div className={Style.Button}>
           <Link to="/User/UserEditProfile">
             <Button

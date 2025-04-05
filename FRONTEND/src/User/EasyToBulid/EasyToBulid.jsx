@@ -19,8 +19,10 @@ const EasyToBulid = () => {
 
   return (
     <div className={Style.body}>
-      <h3>Select your purpose for using a PC</h3>
-      <div className={Style.gridContainer}>
+   <div className={Style.heading}>
+        <h3>Select your purpose for using a PC</h3>
+      </div>
+            <div className={Style.gridContainer}>
         <Button
           variant="contained"
           className={`${Style.customButton} ${selectedButton === 'Gaming' ? Style.selected : ''}`}

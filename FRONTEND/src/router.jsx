@@ -63,6 +63,7 @@ import Complaint from "./Admin/Pages/Complaint/Complaint";
 import AddAdmin from "./Admin/Pages/RegisterAdmin/RegisterAdmin";
 import RegisterAdmin from "./Admin/Pages/RegisterAdmin/RegisterAdmin";
 import CustomPcStatus from "./User/CustomPcStatus/CustomPcStatus";
+import Payment from "./User/Payment/Payment";
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -289,6 +290,10 @@ export const router = createBrowserRouter([
             {
                 path: "CustomPcStatus",
                 element: <CustomPcStatus />
+            },
+            {
+                path: "Payment",
+                element: <Payment />
             },
         ]
     },

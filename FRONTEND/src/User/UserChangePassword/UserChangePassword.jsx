@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Style from './UserChangePassword.module.css'
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { Visibility, VisibilityOff, LockReset } from '@mui/icons-material';
 import UserNavbar from '../UserNavbar/UserNavbar';
+import axios from 'axios';
 
 const UserChangePassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(true);
-    
+
     // Form data state
     const [formData, setFormData] = useState({
         oldPassword: '',
@@ -28,7 +29,7 @@ const UserChangePassword = () => {
             ...formData,
             [field]: e.target.value
         });
-        
+
         // Check password match if needed
         if (field === 'confirmPassword' || field === 'newPassword') {
             if (field === 'confirmPassword') {
@@ -39,19 +40,60 @@ const UserChangePassword = () => {
         }
     };
 
-    const handleSubmit = () => {
+
+    const userId = sessionStorage.getItem('uid');
+    console.log('User ID from session storage:', userId);
+    const [UserArray, setUserArray] = useState([])
+    const fetchuser = () => {
+        axios.get(`http://localhost:5000/collectionUserById/${userId}`).then((response) => {
+            console.log(response.data.user.userPassword);
+            setUserArray(response.data.user.userPassword)
+        })
+    }
+
+
+
+    useEffect(() => {
+        fetchuser();
+    }, [])
+
+
+
+
+
+    const handleSubmit = async () => {
         if (formData.newPassword !== formData.confirmPassword) {
             setPasswordMatch(false);
             return;
         }
-        
+        if (formData.oldPassword !== UserArray) {
+            alert("Oops! Your current password is incorrect. Please try again.");
+
+            return;
+        }
+        if (formData.newPassword !== formData.confirmPassword) {
+            setPasswordMatch(false);
+            return;
+        }
         setIsSubmitting(true);
-        
+
+        try {
+            const response = await axios.put(`http://localhost:5000/collectionUser/${userId}`,  { userPassword: formData.newPassword });
+            console.log(response);
+            console.log('Status updated successfully!');
+        } catch (err) {
+            console.log(err);
+            console.log('Failed to update status. Please try again.');
+            alert("Oops! Something went wrong. Please try again.");
+        }
+
+
+
         // Simulating API call
         setTimeout(() => {
             setIsSubmitting(false);
             setShowSuccess(true);
-            
+
             // Hide success message after 3 seconds
             setTimeout(() => {
                 setShowSuccess(false);
@@ -60,7 +102,7 @@ const UserChangePassword = () => {
     };
 
     return (
-        <div> 
+        <div>
             {/* <UserNavbar /> */}
             <div className={Style.body}>
                 <div className={Style.Card}>
@@ -237,17 +279,17 @@ const UserChangePassword = () => {
                     </div>
 
                     <div className={Style.button}>
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             onClick={handleSubmit}
                             disabled={isSubmitting}
-                            sx={{ 
-                                color: 'Black', 
-                                borderColor: 'white', 
-                                bgcolor: 'white', 
-                                borderRadius: '50px', 
-                                height: '50px', 
-                                width: '200px', 
+                            sx={{
+                                color: 'Black',
+                                borderColor: 'white',
+                                bgcolor: 'white',
+                                borderRadius: '50px',
+                                height: '50px',
+                                width: '200px',
                                 fontSize: '20px',
                                 '&:hover': {
                                     bgcolor: '#e0e0e0',

@@ -4,7 +4,7 @@ body {
 
 .Body {
     background-color: black;
-    height: 260vh;
+    height: 278vh;
     border-bottom: 0.1px solid #ffffff;
 }
 
@@ -83,4 +83,18 @@ body {
     margin-left: 150px;
     margin-top: 80px;
     height: 200px;
+}
+.FooterBottom {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.FooterBottom p {
+    color: #a9a9a9;
+    font-size: 14px;
+    letter-spacing: 1px;
 }
